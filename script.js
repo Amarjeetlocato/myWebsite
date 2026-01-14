@@ -1,11 +1,30 @@
 const sheetURL = "https://script.google.com/macros/s/AKfycbyykVuTFRvdWK0uLkcbJ52_uOFOvZkXGx66oecY8vQUivC1iah52kGzAyBjdkZQbntWdw/exec";
-const params = new URLSearchParams(window.location.search);
-const username = params.get("u");
+document.getElementById("searchForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value.trim();
 fetch(sheetURL)
     .then(response => response.json())
     .then(data => {
 
-        if(data.length === 0 || !user) throw "No data found";
+       if (!username) return;
+
+  fetch(sheetURL)
+    .then(res => res.json())
+    .then(data => {
+
+      const userExists = data.some(
+        item => item.username === username
+      );
+
+      if (userExists) {
+        // ✅ profile found
+        window.location.href = `profile.html?u=${encodeURIComponent(username)}`;
+      } else {
+        // ❌ no data found
+        window.location.href = "new.html";
+      }
+    })
 
         function driveImage(url) {
   if (!url) return "";
@@ -113,29 +132,14 @@ setInterval(changeSlide, 5000);
 
         });
     })
-    .catch(err => {
-        console.error(err);
-        document.getElementById("home").innerHTML = `<p style="color:red; text-align:center;">Something went wrong, try again</p>`;
+   .catch(() => {
+      document.getElementById("msg").innerText =
+        "Something went wrong, try again";
     });
 
 
 
-fetch(sheetURL)
-  .then(res => res.json())
-  .then(data => {
 
-    const user = data.find(item => item.username === username);
+  
 
-    if (!user) {
-      document.body.innerHTML = "Something went wrong, try again";
-      return;
-    }
-
-    document.getElementById("name").innerText = user.fullName;
-    document.getElementById("address").innerText = user.saddress;
-    document.getElementById("photo").src = driveImage(user.proimage);
-  })
-  .catch(() => {
-    document.body.innerHTML = "Something went wrong, try again";
-  });
 
