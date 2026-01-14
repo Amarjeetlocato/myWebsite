@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aakash | Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { scroll-behavior: smooth; background:#f4f6f8; color:#222; }/* Navbar */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #0f172a;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+nav .logo { color:#38bdf8; font-size:22px; font-weight:600; }
+nav a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+nav a:hover { color: #38bdf8; }
+
+section {
+  min-height: 100vh;
+  padding: 110px 40px 60px;
+}
+
+/* Home */
+#home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+#home .text { flex: 1; }
+#home h1 { font-size: 36px; margin-bottom: 15px; }
+#home p { font-size: 18px; line-height: 1.6; }
+#home .photo { flex: 1; text-align: center; }
+#home img {
+  max-width: 280px;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Products */
+#product h2, #order h2, #contact h2 { font-size: 30px; margin-bottom: 25px; }
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+.card:hover { transform: translateY(-6px); }
+.card h3 { margin-bottom: 10px; color:#0f172a; }
+.card p { margin-bottom: 15px; }
+.card a { text-decoration:none; }
+
+/* Buttons */
+.btn {
+  display:inline-block;
+  padding:10px 18px;
+  background:#0f172a;
+  color:#fff;
+  border-radius:8px;
+  font-size:14px;
+}
+.btn:hover { background:#38bdf8; color:#000; }
+
+/* Order */
+#order p { font-size:18px; margin-bottom:20px; }
+
+/* Contact */
+.social {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap:15px;
+}
+.social a {
+  background:#fff;
+  padding:12px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#0f172a;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav { padding: 15px 20px; }
+  #home { flex-direction: column-reverse; text-align:center; }
+  #home h1 { font-size: 28px; }
+  section { padding: 100px 20px 50px; }
+}
+  /* Dark Mode */
+body.dark { background:#020617; color:#e5e7eb; }
+body.dark nav { background:#020617; }
+body.dark .card { background:#020617; color:#e5e7eb; }
+body.dark .social a { background:#020617; color:#e5e7eb; }
+body.dark .btn { background:#38bdf8; color:#000; }
+
+  </style>
+</head>
+<body>  <!-- Navbar -->  <nav>
+    <button id="themeToggle" style="background:#38bdf8;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">🌙</button>
+    <div class="logo">Aakash.dev</div>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#product">Product</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>  <!-- Home -->  <section id="home">
+    <div class="text">
+      <h1 style="background-color: blanchedalmond; color: chocolate;">GET YOUR WEBSITE FREE</h1>
+      <button ><a href="#product" style="background-color: green;">click me1</button>
+      <p>
+        Java Backend Developer<br>
+        Android App Developer<br>
+        Website & WebApp Builder<br>
+        Spring Boot • MySQL • AWS
+      </p>
+    </div>
+    <div class="photo">
+      <img src="your-photo.jpg" alt="Aakash Photo" />
+      <div class="lazy-bg apply-bg rtb-card image-card pl-i160p8nc core-iymqaaq" data-cy="image-card" data-track-promo-impression="" role="img" aria-label="Tools for every small  business first — websites,  email, marketing, and more" data-align="left" data-partial="" style="--iymqaaq-0: url(https://img1.wsimg.com/cdnassets/transform/2c3fd67b-14c0-41e8-9016-5f429bbb5bd4/img-hp-rtb-tools-for-every-first-portrait); --iymqaaq-2: url(https://img1.wsimg.com/cdnassets/transform/52570358-9fe1-47fa-bc56-8e2156ce35c8/img-hp-rtb-tools-for-every-first-landscape); --iymqaaq-4: url(https://img1.wsimg.com/cdnassets/transform/52570358-9fe1-47fa-bc56-8e2156ce35c8/img-hp-rtb-tools-for-every-first-landscape); --i160p8nc-3: var(--ux-7wu8i7, black);"><p data-version="2400" class="ux-text h5 pl-s1d32dim ux-text-title" data-cy="paragraph" cardsize="sm" style="--s1d32dim-1: var(--ux-7wu8i7, black); --s1d32dim-4: flex-start;">Tools for every small  business first — websites,  email, marketing, and more</p></div>
+    </div>
+  </section>  <!-- Product -->  <section id="product">
+    <h2>My Products</h2>
+    <div class="products">
+      <div class="card">
+        <h3>Upcoming Product</h3>
+        <p>Innovative platforms and startup ideas coming soon.</p>
+      </div>
+      <div class="card">
+        <h3>Android App</h3>
+        <p>Download and try my Android application.</p>
+        <a class="btn" href="app/locato.apk" download>Download APK</a>
+      </div>
+      <div class="card">
+        <h3>Website / WebApp</h3>
+        <p>Live demo of a website/web application.</p>
+        <a class="btn" href="https://example.com" target="_blank">View Website</a>
+      </div>
+    </div>
+  </section>  <!-- Order -->  <section id="order">
+    <h2>Place Your Project Order</h2>
+    <p>Share your project idea using Google Form.</p>
+    <a class="btn" href="https://forms.gle/SPKFLn1ZpY9WioHq9" target="_blank">Submit Project Details</a>
+  </section>  <!-- Contact -->  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="social">
+      <a href="mailto:youremail@gmail.com">📧 Email</a>
+      <a href="#">▶️ YouTube</a>
+      <a href="#">📸 Instagram</a>
+      <a href="#">📘 Facebook</a>
+      <a href="#">🐦 Twitter</a>
+      <a href="#">💬 WhatsApp</a>
+      <a href="#">✈️ Telegram</a>
+      <a href="#">💼 LinkedIn</a>
+    </div>
+  </section>  <script>
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
+  </script></body>
+</html>
