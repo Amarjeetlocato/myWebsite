@@ -125,12 +125,19 @@ body.dark .btn { background:#38bdf8; color:#000; }
     <div class="text">
       <h1 style="background-color: blanchedalmond; color: chocolate;">GET YOUR WEBSITE FREE</h1>
       <button ><a href="#product" style="background-color: green;">click me1</button>
-      <p>
-        Java Backend Developer<br>
-        Android App Developer<br>
-        Website & WebApp Builder<br>
-        Spring Boot • MySQL • AWS
-      </p>
+      <h2>Enter your username</h2>
+
+  <form id="searchForm">
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter username"
+      required
+    />
+    <button type="submit">Go</button>
+  </form>
+
+  <p id="msg" style="color:red;"></p>
     </div>
     <div class="photo">
       <img src="your-photo.jpg" alt="Aakash Photo" />
