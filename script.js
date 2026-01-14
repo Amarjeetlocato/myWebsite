@@ -1,10 +1,11 @@
 const sheetURL = "https://script.google.com/macros/s/AKfycbyykVuTFRvdWK0uLkcbJ52_uOFOvZkXGx66oecY8vQUivC1iah52kGzAyBjdkZQbntWdw/exec";
-
+const params = new URLSearchParams(window.location.search);
+const username = params.get("u");
 fetch(sheetURL)
     .then(response => response.json())
     .then(data => {
 
-        if(data.length === 0) throw "No data found";
+        if(data.length === 0 || !user) throw "No data found";
 
         function driveImage(url) {
   if (!url) return "";
@@ -116,4 +117,25 @@ setInterval(changeSlide, 5000);
         console.error(err);
         document.getElementById("home").innerHTML = `<p style="color:red; text-align:center;">Something went wrong, try again</p>`;
     });
+
+
+
+fetch(sheetURL)
+  .then(res => res.json())
+  .then(data => {
+
+    const user = data.find(item => item.username === username);
+
+    if (!user) {
+      document.body.innerHTML = "Something went wrong, try again";
+      return;
+    }
+
+    document.getElementById("name").innerText = user.fullName;
+    document.getElementById("address").innerText = user.saddress;
+    document.getElementById("photo").src = driveImage(user.proimage);
+  })
+  .catch(() => {
+    document.body.innerHTML = "Something went wrong, try again";
+  });
 
