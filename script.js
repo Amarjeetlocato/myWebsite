@@ -1,145 +1,157 @@
-const sheetURL = "https://script.google.com/macros/s/AKfycbyykVuTFRvdWK0uLkcbJ52_uOFOvZkXGx66oecY8vQUivC1iah52kGzAyBjdkZQbntWdw/exec";
-document.getElementById("searchForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+const sheetURL =
+  "https://script.google.com/macros/s/AKfycbwXafkf6E5czgrP0oL0WEmgmDaDuKuKtFz7RIM-5MmmJcrAFR8EPSmWg7vPAy1q7K3BQA/exec";
 
-  const username = document.getElementById("username").value.trim();
-fetch(sheetURL)
-    .then(response => response.json())
-    .then(data => {
-
-       if (!username) return;
-
-  fetch(sheetURL)
-    .then(res => res.json())
-    .then(data => {
-
-      const userExists = data.some(
-        item => item.username === username
-      );
-
-      if (userExists) {
-        // ✅ profile found
-        window.location.href = `profile.html?u=${encodeURIComponent(username)}`;
-      } else {
-        // ❌ no data found
-        window.location.href = "new.html";
-      }
-    })
-
-        function driveImage(url) {
+function driveImage(url) {
   if (!url) return "";
-  const id = url.match(/[-\w]{25,}/);
-  return id
-    ? `https://drive.google.com/thumbnail?id=${id[0]}&sz=w2000`
-    : url;
+  
+  // Extract ID from various Google Drive URL formats
+  let id;
+  
+  // Format: https://drive.google.com/open?id=XXX
+  let match = url.match(/[?&]id=([^&]+)/);
+  if (match) {
+    id = match[1];
+  } else {
+    // Format: https://drive.google.com/file/d/XXX/view
+    match = url.match(/\/d\/([^\/]+)/);
+    if (match) {
+      id = match[1];
+    } else {
+      // Last resort: look for 25+ character ID
+      match = url.match(/[-\w]{25,}/);
+      if (match) {
+        id = match[0];
+      }
+    }
+  }
+  
+  if (id) {
+    return `https://drive.google.com/uc?export=view&id=${id}`;
+  }
+  
+  return url;
 }
 
-        
-        /* nav-data */
-        const container1 = document.getElementById("nav-data");
-
-        data.forEach(item => {
-            container1.innerHTML = `
-       <h1 onclick="toggleInfo()" style="color: #2563eb;">
-        ${item.shortName}
-       </h1>
-
-    <div class="info-box" id="infoBox">
-      <img src="${driveImage(item.proimage)}" alt="Profile Picture">
-      <h3>${item.fullName}</h3>
-      <p>${item.saddress}</p>
-    </div>
-  `;
-        });
-
-        // Slider Section
-       const sliderImages = data[0].slider
-  .split(",")
-  .map(url => url.trim());
-
-let currentIndex = 0;
-const slider = document.getElementById("slider");
-
-
-
-function changeSlide() {
-  slider.style.backgroundImage = `url('${driveImage(sliderImages[currentIndex])}')`;
-  currentIndex = (currentIndex + 1) % sliderImages.length;
+// 🔑 GET user FROM URL
+function getUserFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("user");
 }
 
-changeSlide();
-setInterval(changeSlide, 5000);
+document.addEventListener("DOMContentLoaded", async () => {
 
-        /* youtube-data */
-        const container2 = document.getElementById("youtube-card");
+  const user = getUserFromURL();
 
-        data.forEach(item => {
-            container2.innerHTML = `
-    <a href="${driveImage(item.yurl)}" target="_blank">
-      <img src="${driveImage(item.yimage)}" alt="YouTube Thumbnail">
-    </a>
-    <p>${item.title}</p>
-  `;
-        });
-        /* instagram-data */
-        const container3 = document.getElementById("instagram-card");
+  // ❌ No user in URL
+  if (!user) {
+    alert("Invalid profile link");
+    window.location.href = "index.html";
+    return;
+  }
 
-        data.forEach(item => {
-            container3.innerHTML = `
-    <a href="${driveImage(item.iurl)}" target="_blank">
-      <img src="${driveImage(item.iimage)}" alt="Instagram Thumbnail">
-    </a>
-    <p>${item.title}</p>
-  `;
-        });
+  try {
+    const res = await fetch(`${sheetURL}?user=${encodeURIComponent(user)}`);
+    const data = await res.json();
 
-        /* facebook-data */
-        const container4 = document.getElementById("facebook-card");
-        data.forEach(item => {
-            container4.innerHTML = `
-    <a href="${driveImage(item.furl)}" target="_blank">
-      <img src="${driveImage(item.fimage)}" alt="Facebook Thumbnail">
-    </a>
-    <p>${item.title}</p>
-  `;
-        });
-
-        /* thought-data */
-        const container5 = document.getElementById("thought-data");
-
-        data.forEach(item => {
-            container5.innerHTML = `
-    ${item.thought}
-  `;
-        });
-
-
-        /* map-data */
-        const container6 = document.getElementById("map-data");
-
-        data.forEach(item => {
-            container6.innerHTML = `
-    <iframe src="${driveImage(item.map)}" width="100%" height="320px" frameborder="0" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);"></iframe>
-  `;
-        });
-
-        data.forEach(item => {
-
-            document.getElementById("instagram-data").href = driveImage(item.iurl);
-            document.getElementById("facebook-data").href = driveImage(item.furl);
-            document.getElementById("youtube-data").href = driveImage(item.yurl);
-            document.getElementById("gmail-data").href = `mailto:${item.gmail}`;
-
-        });
-    })
-   .catch(() => {
-      document.getElementById("msg").innerText =
-        "Something went wrong, try again";
+    console.log("PROFILE DATA:", data);
+    console.log("Image URLs:", {
+      proimage: data?.proimage,
+      yimage: data?.yimage,
+      iimage: data?.iimage,
+      fimage: data?.fimage
     });
 
+    if (!data || data.error) {
+      alert("Profile not found");
+      window.location.href = "index.html";
+      return;
+    }
 
+    loadProfile(data);
 
+  } catch (err) {
+    console.error("FETCH ERROR", err);
+    alert("Server error");
+  }
+});
+function loadProfile(item) {
+  // ===== NAV PROFILE =====
+  const navData = document.getElementById("nav-data");
+  if (navData) {
+    navData.innerHTML = `
+     <h1 onclick="toggleInfo()" style="color:#2563eb;">${item.shortName}</h1>
+      <div class="info-box" id="infoBox">
+        <img src="${driveImage(item.proimage)}" alt="Profile">
+        <h3>${item.fullName}</h3>
+        <p>${item.saddress}</p>
+      </div>
+    `;
+  }
 
+  // ===== SLIDER =====
+  const slider = document.getElementById("slider");
+  if (slider && item.slider) {
+    const images = item.slider.split(",").map(s => s.trim());
+    let i = 0;
+    function changeSlide() {
+      slider.style.backgroundImage = `url('${driveImage(images[i])}')`;
+      i = (i + 1) % images.length;
+    }
+    changeSlide();
+    setInterval(changeSlide, 5000);
+  }
+
+  // ===== CARDS =====
+  const yImageUrl = driveImage(item.yimage);
+  const iImageUrl = driveImage(item.iimage);
+  const fImageUrl = driveImage(item.fimage);
   
+  console.log("Converted URLs:", { yImageUrl, iImageUrl, fImageUrl });
+  
+  document.getElementById("youtube-card").innerHTML = `
+    <a href="${item.yurl}" target="_blank">
+      <img src="${yImageUrl}" onerror="console.error('YouTube image failed:', '${yImageUrl}')">
+    </a>
+    <p>YouTube</p>
+  `;
+
+  document.getElementById("instagram-card").innerHTML = `
+    <a href="${item.iurl}" target="_blank">
+      <img src="${iImageUrl}" onerror="console.error('Instagram image failed:', '${iImageUrl}')">
+    </a>
+    <p>Instagram</p>
+  `;
+
+  document.getElementById("facebook-card").innerHTML = `
+    <a href="${item.furl}" target="_blank">
+      <img src="${fImageUrl}" onerror="console.error('Facebook image failed:', '${fImageUrl}')">
+    </a>
+    <p>Facebook</p>
+  `;
 
 
+  // ===== THOUGHT =====
+  const thought = document.getElementById("thought-data");
+  if (thought) thought.innerText = item.thought || "";
+
+  // ===== MAP =====
+  if (item.map && item.map.startsWith("http")) {
+      document.getElementById("map-data").innerHTML = `
+        <iframe
+          class="map"
+          src="${item.map}"
+          loading="lazy">
+        </iframe>
+      `;
+    }
+
+  // ===== SOCIAL LINKS =====
+  document.getElementById("instagram-data").href = item.iurl;
+  document.getElementById("facebook-data").href = item.furl;
+  document.getElementById("youtube-data").href = item.yurl;
+}
+
+// ===== DARK MODE =====
+function toggleMode() {
+  document.body.classList.toggle("dark");
+}
