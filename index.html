@@ -111,6 +111,8 @@ body.dark .social a { background:#020617; color:#e5e7eb; }
 body.dark .btn { background:#38bdf8; color:#000; }
 
   </style>
+
+  <script src="search.js" defer></script>
 </head>
 <body>  <!-- Navbar -->  <nav>
     <button id="themeToggle" style="background:#38bdf8;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">🌙</button>
@@ -122,31 +124,27 @@ body.dark .btn { background:#38bdf8; color:#000; }
       <a href="#contact">Contact</a>
     </div>
   </nav>  <!-- Home -->  <section id="home">
-    <div class="text">
-      <h1 style="background-color: blanchedalmond; color: chocolate;">GET YOUR WEBSITE FREE</h1>
-      <button ><a href="#product" style="background-color: green;">click me1</button>
-      <h2>Enter your username</h2>
+    
+  <form id="searchForm" target="_blank">
+  <input type="email" id="username" placeholder="Enter email" required />
+  <button type="submit">Go</button>
+</form>
 
-  <form id="searchForm">
-    <input
-      type="text"
-      id="username"
-      placeholder="Enter username"
-      required
-    />
-    <button type="submit">Go</button>
-  </form>
+  <!-- JS file link -->
+ 
+
 
   <p id="msg" style="color:red;"></p>
     </div>
     <div class="photo">
-      <img src="your-photo.jpg" alt="Aakash Photo" />
+      <img src="ansari.png" alt="Aakash Photo" />
       <div class="lazy-bg apply-bg rtb-card image-card pl-i160p8nc core-iymqaaq" data-cy="image-card" data-track-promo-impression="" role="img" aria-label="Tools for every small  business first — websites,  email, marketing, and more" data-align="left" data-partial="" style="--iymqaaq-0: url(https://img1.wsimg.com/cdnassets/transform/2c3fd67b-14c0-41e8-9016-5f429bbb5bd4/img-hp-rtb-tools-for-every-first-portrait); --iymqaaq-2: url(https://img1.wsimg.com/cdnassets/transform/52570358-9fe1-47fa-bc56-8e2156ce35c8/img-hp-rtb-tools-for-every-first-landscape); --iymqaaq-4: url(https://img1.wsimg.com/cdnassets/transform/52570358-9fe1-47fa-bc56-8e2156ce35c8/img-hp-rtb-tools-for-every-first-landscape); --i160p8nc-3: var(--ux-7wu8i7, black);"><p data-version="2400" class="ux-text h5 pl-s1d32dim ux-text-title" data-cy="paragraph" cardsize="sm" style="--s1d32dim-1: var(--ux-7wu8i7, black); --s1d32dim-4: flex-start;">Tools for every small  business first — websites,  email, marketing, and more</p></div>
     </div>
   </section>  <!-- Product -->  <section id="product">
     <h2>My Products</h2>
-    <div class="products">
+    <div id="product" class="products">
       <div class="card">
+        <a href="https://forms.gle/SPKFLn1ZpY9WioHq9" target="_blank">next</a>
         <h3>Upcoming Product</h3>
         <p>Innovative platforms and startup ideas coming soon.</p>
       </div>
@@ -177,11 +175,6 @@ body.dark .btn { background:#38bdf8; color:#000; }
       <a href="#">✈️ Telegram</a>
       <a href="#">💼 LinkedIn</a>
     </div>
-  </section>  <script>
-    const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    });
-  </script></body>
+  </section> 
+</body>
 </html>
