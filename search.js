@@ -1,5 +1,5 @@
 const sheetURL =
-  "https://script.google.com/macros/s/AKfycbwveKQy_4qFzO1TgMuIiBFT-qvbPK-a5nXowpkuFlYy48vkSFCwiyTr_DmRXmST4RhHwA/exec";
+  "https://script.google.com/macros/s/AKfycbxiRq2h39zErcONKIn6WqCqiureYwLIi8cEi-9AAiQy1B0IFEBsVwmpDJupc1XSfTdpXQ/exec";
 
 function formatEmail(email) {
   return email.toLowerCase().replace(/@/g, "_").replace(/\./g, "_");
