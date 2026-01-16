@@ -3,33 +3,35 @@ const sheetURL =
 
 function driveImage(url) {
   if (!url) return "";
-  
-  // Extract ID from various Google Drive URL formats
-  let id;
-  
-  // Format: https://drive.google.com/open?id=XXX
+
+  let id = null;
+
+  // 1️⃣ open?id=XXXX
   let match = url.match(/[?&]id=([^&]+)/);
   if (match) {
     id = match[1];
-  } else {
-    // Format: https://drive.google.com/file/d/XXX/view
+  }
+
+  // 2️⃣ /file/d/XXXX/
+  if (!id) {
     match = url.match(/\/d\/([^\/]+)/);
-    if (match) {
-      id = match[1];
-    } else {
-      // Last resort: look for 25+ character ID
-      match = url.match(/[-\w]{25,}/);
-      if (match) {
-        id = match[0];
-      }
-    }
+    if (match) id = match[1];
   }
-  
-  if (id) {
-    return `https://drive.google.com/uc?export=view&id=${id}`;
+
+  // 3️⃣ last fallback (25+ chars)
+  if (!id) {
+    match = url.match(/[-\w]{25,}/);
+    if (match) id = match[0];
   }
-  
-  return url;
+
+  // ❌ agar ID nahi mila
+  if (!id) return url;
+
+  // 🔁 OPTION A: Direct Drive Image
+  // return `https://drive.google.com/uc?export=view&id=${id}`;
+
+  // 🔁 OPTION B: Sheet / API Proxy (tumhara current use)
+  return `${sheetURL}?img=${id}`;
 }
 
 // 🔑 GET user FROM URL
@@ -155,5 +157,6 @@ function loadProfile(item) {
 function toggleMode() {
   document.body.classList.toggle("dark");
 }
+
 
 
