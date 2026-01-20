@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Template 3 - Dynamic Profile</title>
+
+<!-- ================= CSS (DYNAMIC DESIGN) ================= -->
+<style>
+/* ================= ROOT VARIABLES ================= */
+:root {
+  --bg: #0a0e27;
+  --bg-secondary: #111632;
+  --text: #e4e6f1;
+  --text-light: #a0a6b8;
+  --card: #1a1f3a;
+  --nav: #0a0e27;
+  --primary: #00d9ff;
+  --primary-light: #33ffff;
+  --secondary: #ff006e;
+  --accent: #ffd60a;
+  --shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+  --shadow-lg: 0 20px 60px rgba(0, 217, 255, 0.2);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark {
+  --bg: #000000;
+  --bg-secondary: #0d1117;
+  --text: #f0f0f0;
+  --text-light: #c0c0c0;
+  --card: #1a1a2e;
+  --nav: #0f0f1f;
+}
+
+/* ================= GLOBAL STYLES ================= */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body { 
+  background: var(--bg);
+  color: var(--text); 
+  transition: var(--transition);
+  font-family: 'Courier New', 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* Animated background gradient */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(255, 0, 110, 0.15) 0%, transparent 50%);
+  z-index: -1;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* ================= NAVBAR ================= */
+nav { 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(10, 14, 39, 0.95) 100%);
+  color: var(--text);
+  padding: 16px 40px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+  box-shadow: var(--shadow);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+  flex: 1;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-self: end;
+}
+
+nav .logo { 
+  color: var(--primary); 
+  font-size: 16px; 
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: var(--transition);
+  position: relative;
+}
+
+nav .logo::after {
+  content: '> ';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49%, 100% {
+    opacity: 1;
+  }
+  50%, 99% {
+    opacity: 0;
+  }
+}
+
+nav .logo:hover {
+  text-shadow: 0 0 20px var(--primary);
+  transform: scale(1.05);
+}
+
+.nav-center h1 { 
+  cursor: pointer; 
+  font-size: 16px;
+  transition: var(--transition);
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.nav-center h1:hover {
+  text-shadow: 0 0 20px var(--primary);
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: var(--transition);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+nav a::before {
+  content: '> ';
+  opacity: 0;
+  position: absolute;
+  left: -20px;
+  transition: opacity 0.3s;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+}
+
+nav a:hover::before {
+  opacity: 1;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.theme-toggle-nav {
+  cursor: pointer;
+  font-size: 18px;
+  transition: var(--transition);
+  background: none;
+  border: none;
+  color: var(--primary);
+  padding: 5px;
+  font-weight: 700;
+}
+
+.theme-toggle-nav:hover {
+  transform: rotate(20deg) scale(1.2);
+  text-shadow: 0 0 15px var(--primary);
+}
+
+/* ================= CONTAINER ================= */
+.container { 
+  position: relative; 
+}
+
+.info-box { 
+  position: absolute; 
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%) scale(0.95);
+  width: 280px; 
+  padding: 20px; 
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; 
+  pointer-events: none;
+  transition: var(--transition);
+  backdrop-filter: blur(15px);
+}
+
+.info-box h3 {
+  font-size: 14px;
+  margin: 10px 0 6px;
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-box p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.container:hover .info-box,
+.info-box.show { 
+  opacity: 1; 
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+  margin-top: 80px;
+  padding: 100px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: pulse 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 40px rgba(0, 217, 255, 0.5);
+}
+
+.hero p {
+  font-size: 16px;
+  color: var(--text-light);
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  line-height: 1.8;
+}
+
+.hero code {
+  background: rgba(0, 217, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--primary);
+  border-left: 2px solid var(--primary);
+}
+
+/* ================= PROJECTS SECTION ================= */
+.projects {
+  padding: 80px 50px;
+  position: relative;
+}
+
+.projects h2 {
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 60px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(26, 31, 58, 0.5) 100%);
+  border: 2px solid rgba(0, 217, 255, 0.2);
+  padding: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.project-card:hover::before {
+  left: 100%;
+}
+
+.project-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+}
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  transition: transform 0.5s;
+}
+
+.project-card:hover img {
+  transform: scale(1.08);
+}
+
+.project-card h3 {
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.project-card p {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= ABOUT SECTION ================= */
+.about {
+  padding: 80px 50px;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(255, 0, 110, 0.05) 100%);
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+}
+
+.about-box {
+  background: var(--card);
+  padding: 40px 50px;
+  max-width: 700px;
+  margin: 0 auto;
+  border: 2px solid rgba(0, 217, 255, 0.2);
+  border-radius: 8px;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.about-box:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-box p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+/* ================= FOOTER ================= */
+.footer { 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(10, 14, 39, 0.95) 100%);
+  color: var(--text); 
+  padding: 60px 50px 40px;
+  text-align: center;
+  border-top: 2px solid rgba(0, 217, 255, 0.2);
+}
+
+.footer-social { 
+  display: flex;
+  justify-content: center;
+  gap: 25px; 
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-social a { 
+  width: 50px; 
+  height: 50px; 
+  background: rgba(0, 217, 255, 0.1);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all var(--transition);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-social a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  transition: width 0.3s, height 0.3s;
+}
+
+.footer-social a:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-social a:hover {
+  transform: translateY(-5px) scale(1.1);
+  color: var(--bg);
+}
+
+.footer-social img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  transition: filter var(--transition);
+}
+
+.footer-social a:hover img {
+  filter: brightness(0) invert(0);
+}
+
+.footer-bottom {
+  font-size: 13px;
+  opacity: 0.8;
+  position: relative;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-light) 0%, var(--secondary) 100%);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1024px) {
+  nav {
+    padding: 14px 30px;
+  }
+
+  .nav-center {
+    gap: 20px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+
+  .nav-center {
+    width: 100%;
+    gap: 15px;
+    order: 3;
+  }
+
+  nav a {
+    font-size: 11px;
+  }
+
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .projects {
+    padding: 60px 20px;
+  }
+
+  .projects h2 {
+    font-size: 28px;
+  }
+
+  .about {
+    padding: 60px 20px;
+  }
+
+  .about h2 {
+    font-size: 28px;
+  }
+
+  .about-box {
+    padding: 30px 20px;
+  }
+
+  .footer {
+    padding: 40px 20px 20px;
+  }
+}
+</style>
+
+<!-- ✅ JS FILE -->
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="test.html">Template3</a>
+  </div>
+
+  <!-- Center: Profile Name -->
+  <div id="nav-data" class="nav-center container">
+    <h1 id="profileName">Dynamic</h1>
+    <div class="info-box" id="infoBox">
+      <h3 id="profileFullName">Creative Agency</h3>
+      <p id="profileAddress">Tech Showcase</p>
+    </div>
+  </div>
+  
+
+  <!-- Right: Controls -->
+  <div class="nav-right">
+    <select id="langSelect" aria-label="Language" title="Language">
+      <option value="auto">Auto</option>
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+    <button id="themeToggle" class="theme-toggle-nav" onclick="toggleMode()">🌙</button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <h1>Template 3</h1>
+  <p>Dynamic and interactive design perfect for <code>creative agencies</code> and <code>tech companies</code></p>
+</div>
+
+<!-- ================= PROJECTS ================= -->
+<section class="projects">
+  <h2>Featured Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 1" style="object-fit: cover;">
+      <h3>Interactive Design</h3>
+      <p>Cutting-edge web design with modern technologies and smooth interactions for maximum user engagement.</p>
+    </div>
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 2" style="object-fit: cover;">
+      <h3>Motion Graphics</h3>
+      <p>Dynamic animations and motion design that brings your brand to life with engaging visual storytelling.</p>
+    </div>
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 3" style="object-fit: cover;">
+      <h3>Tech Innovation</h3>
+      <p>Latest technologies integrated with creative design for next-generation digital experiences.</p>
+    </div>
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 4" style="object-fit: cover;">
+      <h3>Brand Strategy</h3>
+      <p>Strategic branding solutions that elevate your identity and create lasting impressions in the market.</p>
+    </div>
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 5" style="object-fit: cover;">
+      <h3>Digital Marketing</h3>
+      <p>Comprehensive digital marketing campaigns designed to reach and engage your target audience effectively.</p>
+    </div>
+    <div class="project-card">
+      <img src="l.jpeg" alt="Project 6" style="object-fit: cover;">
+      <h3>Creative Solutions</h3>
+      <p>Custom creative solutions tailored to your unique business needs and market positioning requirements.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about">
+  <h2>About Template 3</h2>
+  <div class="about-box">
+    <p>Template 3 is designed for dynamic and interactive web experiences. With cyberpunk-inspired aesthetics, smooth animations, and cutting-edge interactions, it's perfect for creative agencies, tech startups, and innovative brands that want to make a bold statement.</p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-social">
+    <a href="#" target="_blank" title="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg">
+    </a>
+    <a href="#" target="_blank" title="GitHub">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg">
+    </a>
+    <a href="#" target="_blank" title="Twitter">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg">
+    </a>
+    <a href="#" target="_blank" title="LinkedIn">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg">
+    </a>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Template 3 • Dynamic & Interactive Design</p>
+  </div>
+</footer>
+
+<script>
+function toggleMode() { 
+  document.body.classList.toggle('dark'); 
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+
+function toggleInfo() { 
+  document.getElementById('infoBox').classList.toggle('show'); 
+}
+
+// Apply saved theme on load
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+</script>
+
+</body>
+</html>

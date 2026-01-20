@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyWebsite</title>
+  <style>
+    /* ================= ROOT VARIABLES ================= */
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text: #1a1a1a;
+      --text-light: #666666;
+      --card: #ffffff;
+      --nav: #0a1628;
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --secondary: #f97316;
+      --accent: #ec4899;
+      --shadow: 0 10px 30px rgba(0,0,0,0.1);
+      --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --bg-secondary: #1e293b;
+      --text: #e5e7eb;
+      --text-light: #9ca3af;
+      --card: #1e293b;
+      --nav: #0c111d;
+      --primary: #3b82f6;
+      --primary-light: #60a5fa;
+    }
+
+    /* ================= GLOBAL STYLES ================= */
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      font-family: 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body { 
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* ================= NAVBAR ================= */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(135deg, var(--nav) 0%, rgba(10, 22, 40, 0.95) 100%);
+      padding: 16px 40px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 40px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      justify-self: end;
+    }
+
+    nav .logo { 
+      color: var(--primary); 
+      font-size: 24px; 
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      transition: 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    nav .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+      transition: all 0.3s;
+    }
+
+    nav .logo:hover {
+      color: var(--secondary);
+      transform: scale(1.05);
+    }
+
+    nav .logo:hover .logo-icon {
+      border-color: var(--secondary);
+      transform: rotate(15deg);
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-credit {
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-credit a {
+      color: var(--primary);
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .nav-credit a:hover {
+      color: var(--secondary);
+    }
+
+    #themeToggle {
+      cursor: pointer;
+      font-size: 20px;
+      transition: 0.3s;
+      background: none;
+      border: none;
+      padding: 5px;
+    }
+
+    #themeToggle:hover {
+      transform: rotate(20deg) scale(1.15);
+    }
+
+    #langSelect {
+      margin-right: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    /* ================= LOGO SECTION ================= */
+    .logo-section {
+      margin-top: 100px;
+      padding: 80px 40px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-container {
+      margin-bottom: 40px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .logo-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow-lg);
+      border: 5px solid var(--primary);
+      transition: all 0.4s;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
+    }
+
+    .logo-section h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+
+    .logo-section p {
+      font-size: 18px;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto 30px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    /* ================= SECTIONS ================= */
+    section {
+      min-height: auto;
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-size: 42px;
+      margin-bottom: 50px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+    }
+
+    /* ================= HOME SECTION ================= */
+    #home {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 80px;
+      padding: 80px 40px;
+      min-height: 70vh;
+    }
+
+    #home .text { 
+      flex: 1;
+      max-width: 600px;
+      animation: fadeInLeft 0.8s ease-out;
+    }
+
+    #home h1 { 
+      font-size: 52px; 
+      margin-bottom: 25px;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #home p { 
+      font-size: 18px; 
+      line-height: 1.8;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+
+    #searchForm {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    #searchForm input {
+      flex: 1;
+      padding: 16px 24px;
+      border: 2px solid rgba(37, 99, 235, 0.2);
+      border-radius: 12px;
+      font-size: 16px;
+      background: var(--bg-secondary);
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #searchForm input::placeholder {
+      color: var(--text-light);
+    }
+
+    #searchForm input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.15);
+      background: var(--bg);
+    }
+
+    #searchForm button {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 5px 20px rgba(37, 99, 235, 0.2);
+      white-space: nowrap;
+    }
+
+    #searchForm button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(37, 99, 235, 0.35);
+    }
+
+    #searchForm button:active {
+      transform: translateY(-1px);
+    }
+
+    /* ================= PRODUCTS SECTION ================= */
+    #product {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(249, 115, 22, 0.05) 100%);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    .card:hover { 
+      transform: translateY(-12px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card h3 { 
+      margin-bottom: 15px; 
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .card p { 
+      margin-bottom: 25px;
+      color: var(--text-light);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .card a { 
+      text-decoration: none;
+    }
+
+    /* ================= BUTTONS ================= */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn:hover { 
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ================= ORDER SECTION ================= */
+    #order {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+    }
+
+    #order p { 
+      font-size: 20px; 
+      margin-bottom: 40px;
+      color: var(--text-light);
+    }
+
+    /* ================= CONTACT SECTION ================= */
+    #contact {
+      text-align: center;
+    }
+
+    .social {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .social a {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-weight: 600;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      font-size: 16px;
+    }
+
+    .social a:hover {
+      transform: translateY(-8px);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    /* ================= FEEDBACK SECTION ================= */
+    #feedback {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+    }
+
+    .feedback-form {
+      max-width: 600px;
+      margin: 40px auto;
+      background: var(--card);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .feedback-form:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feedback-form .form-group {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .feedback-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid rgba(37, 99, 235, 0.2);
+      border-radius: 10px;
+      background: var(--bg-secondary);
+      color: var(--text);
+      font-family: inherit;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .feedback-form input::placeholder,
+    .feedback-form textarea::placeholder {
+      color: var(--text-light);
+    }
+
+    .feedback-form input:focus,
+    .feedback-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+      background: var(--bg);
+    }
+
+    .feedback-form textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+    }
+
+    .feedback-form button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .feedback-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feedback-form button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .feedback-success {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .feedback-success.show {
+      display: block;
+    }
+
+    .feedback-success h3 {
+      font-size: 28px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .feedback-success p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    /* ================= PRODUCT PREVIEW ================= */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      transition: all 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ================= IFRAME STYLING ================= */
+    .product-iframe {
+      width: 100%;
+      height: 150px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 2px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.3s;
+    }
+
+    .product-iframe:hover {
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .card-iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    .card-iframe:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .profile-iframe {
+      width: 200px;
+      height: 250px;
+      border-radius: 10px;
+      border: 2px solid var(--primary);
+      transition: all 0.3s;
+    }
+
+    .profile-iframe:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .slider-iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      border: 2px solid rgba(37, 99, 235, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .slider-iframe:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 50px rgba(37, 99, 235, 0.3);
+    }
+
+    .product-card img { 
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .product-card h3 { 
+      margin: 6px 0; 
+      color: var(--primary);
+      font-size: 18px;
+    }
+
+    .product-card p { 
+      color: var(--text-light); 
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .product-card .actions { 
+      margin-top: auto; 
+      display: flex; 
+      gap: 8px; 
+      align-items: center; 
+    }
+
+    .btn-preview { 
+      background: var(--primary); 
+      color: #fff; 
+      padding: 8px 12px; 
+      border-radius: 8px; 
+      text-decoration: none; 
+      cursor: pointer; 
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-preview:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-open { 
+      background: transparent; 
+      color: var(--text); 
+      border: 1px solid rgba(0,0,0,0.06); 
+      padding: 8px 12px; 
+      border-radius: 8px; 
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-open:hover {
+      background: var(--bg-secondary);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-order {
+      background: linear-gradient(135deg, var(--secondary) 0%, #ec4899 100%);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .btn-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3);
+    }
+
+    /* Preview modal */
+    .preview-modal { 
+      position: fixed; 
+      inset: 0; 
+      display: none; 
+      align-items: center; 
+      justify-content: center; 
+      background: rgba(0,0,0,0.6); 
+      z-index: 2000; 
+    }
+
+    .preview-modal.show { 
+      display: flex; 
+    }
+
+    .preview-modal .frame { 
+      width: 92%; 
+      max-width: 1200px; 
+      height: 80%; 
+      background: #fff; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+    }
+
+    .preview-modal .toolbar { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 8px 12px; 
+      background: #0f172a; 
+      color: #fff; 
+    }
+
+    .preview-modal .toolbar .left { 
+      display: flex; 
+      gap: 8px; 
+      align-items: center; 
+    }
+
+    .preview-modal iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; 
+      background: #000; 
+      display: none; 
+    }
+
+    .preview-modal .preview-body { 
+      flex: 1; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      background: #000; 
+      position: relative; 
+    }
+
+    .preview-spinner { 
+      color: #fff; 
+      font-size: 14px; 
+    }
+
+    .frame.device-mobile .preview-body > iframe { 
+      width: 375px; 
+      height: 667px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
+      border-radius: 10px; 
+      display: block; 
+    }
+
+    .frame.device-desktop .preview-body > iframe { 
+      display: block; 
+    }
+
+    /* ================= LOADING ANIMATION ================= */
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+
+    .loading-spinner.active {
+      display: inline-block;
+    }
+
+    #searchForm button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #searchForm button:disabled:hover {
+      transform: none;
+      box-shadow: var(--shadow);
+    }
+
+    .loading-text {
+      display: none;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 15px;
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    .loading-text.active {
+      display: block;
+    }
+
+    /* ================= ANIMATIONS ================= */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes fadeOutDown {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    /* ================= RESPONSIVE DESIGN ================= */
+    @media (max-width: 1024px) {
+      nav {
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+      }
+
+      .nav-center {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        gap: 20px;
+        order: 3;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      #home {
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav { 
+        padding: 12px 20px;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        margin-left: 15px;
+        font-size: 14px;
+      }
+
+      .logo-section {
+        padding: 60px 20px;
+        margin-top: 70px;
+      }
+
+      .logo-section h1 {
+        font-size: 32px;
+      }
+
+      #home { 
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      #home h1 { 
+        font-size: 32px;
+      }
+
+      #home p {
+        font-size: 16px;
+      }
+
+      #searchForm {
+        flex-direction: column;
+      }
+
+      section { 
+        padding: 60px 20px;
+      }
+
+      section h2 {
+        font-size: 32px;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .social a {
+        padding: 15px;
+        font-size: 14px;
+      }
+    }
+
+    /* ================= DARK MODE ================= */
+    body.dark { 
+      background: var(--bg);
+    }
+
+    body.dark nav { 
+      background: linear-gradient(135deg, var(--nav) 0%, rgba(12, 17, 29, 0.95) 100%);
+    }
+
+    body.dark .card { 
+      background: var(--card);
+      color: var(--text);
+    }
+
+    body.dark .social a { 
+      background: var(--card); 
+      color: var(--text);
+    }
+
+    /* ================= FOOTER STYLES ================= */
+    footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0a1628 100%);
+      padding: 60px 40px 40px;
+      color: #fff;
+      border-top: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    footer .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    footer .footer-section h3,
+    footer .footer-section h4 {
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    footer .footer-section h3 {
+      font-size: 24px;
+      margin: 0 0 15px 0;
+    }
+
+    footer .footer-section h4 {
+      font-size: 16px;
+      margin: 0 0 15px 0;
+      color: #fff;
+    }
+
+    footer .footer-section p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 10px 0;
+    }
+
+    footer .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s;
+      display: inline-block;
+      padding: 5px 0;
+      margin-bottom: 8px;
+    }
+
+    footer .footer-section a:hover {
+      color: #3b82f6;
+      transform: translateX(5px);
+    }
+
+    footer .social-divider {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 35px;
+      margin-bottom: 30px;
+    }
+
+    footer .social-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0 0 20px 0;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    footer .social-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    footer .social-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 20px;
+      border: 2px solid transparent;
+    }
+
+    footer .social-icon:hover {
+      background: linear-gradient(135deg, #3b82f6 0%, #f97316 100%);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    footer .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 25px;
+      text-align: center;
+    }
+
+    footer .footer-bottom p {
+      font-size: 14px;
+      margin: 0 0 8px 0;
+      color: #fff;
+    }
+
+    footer .footer-bottom p:last-child {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+
+    footer .footer-bottom a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    footer .footer-bottom a:hover {
+      color: #f97316;
+      text-decoration: underline;
+    }
+
+  </style>
+
+  
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-left">
+      <div class="logo" title="Home" data-i18n="logo">
+        <img src="pi.jpeg" alt="PI Logo" class="logo-icon"> <span>MyWebsite</span>
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#product" data-i18n="nav.product">Product</a>
+      <a href="#order" data-i18n="nav.order">Order</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="#feedback" data-i18n="nav.feedback">Feedback</a>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-credit">
+        <span data-i18n="nav.credit">MyWebsite from</span> <a href="https://amarjeetlocato.github.io/Oneframe/" target="_blank" rel="noopener" data-i18n="nav.credit_link">Whoami</a>
+      </div>
+      <select id="langSelect" aria-label="Language" title="Language">
+        <option value="auto">Auto</option>
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+      <button id="themeToggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+    </div>
+  </nav>
+
+  <!-- Logo Section -->
+  <div class="logo-section">
+    <div class="logo-container">
+      <img src="pi.jpeg" alt="Logo" class="logo-img">
+    </div>
+    <h1 data-i18n="hero.title">Welcome to MyWebsite</h1>
+    <p data-i18n="hero.subtitle">Discover innovative products and services tailored for your success</p>
+  </div>
+
+  <!-- Home Section -->
+  <section id="home">
+    <div class="text">
+      <h1 data-i18n="home.greeting">Hello, I'm Aakash</h1>
+      <p data-i18n="home.description">Search for any profile by entering their email address. Find amazing projects, products, and connect with creative professionals.</p>
+      <form id="searchForm">
+        <input type="email" id="username" placeholder="Enter email address..." data-i18n-placeholder="form.placeholder" required />
+        <button type="submit" id="submitBtn">
+          <span class="loading-spinner" id="loadingSpinner"></span>
+          <span id="buttonText" data-i18n="form.search">Search Profile</span>
+        </button>
+      </form>
+      <p id="msg" style="color:red; margin-top: 15px;"></p>
+      <div class="loading-text" id="loadingText" data-i18n="form.searching">
+        ⏳ Searching profile... Please wait
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section id="product">
+    <h2 data-i18n="product.title">My Templates</h2>
+    <div class="products-grid" id="productsGrid">
+      <!-- Template 1 - Saraswati Puja -->
+      <div class="product-card" data-template="template1.html" data-template-id="1">
+        <img src="l.jpeg" alt="Template 1" style="object-fit: cover;">
+        <h3>🎨 Saraswati Puja</h3>
+        <p>Elegant design with spiritual aesthetics. Perfect for cultural and knowledge-based showcases.</p>
+        <div class="actions">
+          <button class="btn-preview" onclick="previewTemplate('template1.html')">Preview</button>
+          <button class="btn-order" onclick="orderTemplate(1)">Get Website</button>
+        </div>
+      </div>
+
+      <!-- Template 2 - Republic Day -->
+      <div class="product-card" data-template="template2.html" data-template-id="2">
+        <img src="l.jpeg" alt="Template 2" style="object-fit: cover;">
+        <h3>✨ Republic Day</h3>
+        <p>Patriotic design with tricolor theme. Ideal for civic and national initiatives.</p>
+        <div class="actions">
+          <button class="btn-preview" onclick="previewTemplate('template2.html')">Preview</button>
+          <button class="btn-order" onclick="orderTemplate(2)">Get Website</button>
+        </div>
+      </div>
+
+      <!-- Template 3 - Dynamic Design -->
+      <div class="product-card" data-template="template3.html" data-template-id="3">
+        <img src="l.jpeg" alt="Template 3" style="object-fit: cover;">
+        <h3>🚀 Dynamic Design</h3>
+        <p>Modern and interactive design. Best for creative agencies and tech companies.</p>
+        <div class="actions">
+          <button class="btn-preview" onclick="previewTemplate('template3.html')">Preview</button>
+          <button class="btn-order" onclick="orderTemplate(3)">Get Website</button>
+        </div>
+      </div>
+
+      <!-- Template 4 - First Template -->
+      <div class="product-card" data-template="first-template.html" data-template-id="4">
+        <img src="l.jpeg" alt="Template 4" style="object-fit: cover;">
+        <h3>💎 Premium Profile</h3>
+        <p>Premium profile template with animated slider. Professional and elegant layout.</p>
+        <div class="actions">
+          <button class="btn-preview" onclick="previewTemplate('first-template.html')">Preview</button>
+          <button class="btn-order" onclick="orderTemplate(4)">Get Website</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preview modal -->
+  <div class="preview-modal" id="previewModal" aria-hidden="true">
+    <div class="frame device-desktop" role="dialog" aria-modal="true">
+      <div class="toolbar">
+        <div class="left">
+          <button id="closePreview" aria-label="Close">✕</button>
+          <button id="openNewTab" class="btn-open" data-i18n="preview.openNewTab">Open in new tab</button>
+        </div>
+        <div class="right">
+          <button id="deviceToggle" class="btn-open" data-i18n="preview.device.mobile">Mobile</button>
+        </div>
+      </div>
+      <div class="preview-body">
+        <div class="preview-spinner" id="previewSpinner">⏳ Loading preview…</div>
+        <img id="previewImage" src="" alt="Preview" style="max-width:90%; max-height:90%; display:none; border-radius:8px;" loading="lazy">
+        <iframe id="previewIframe" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; clipboard-write; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="display:none;"></iframe>
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; padding:12px; background:#fff; justify-content:center;">
+      <a id="primaryAction" class="btn-preview" href="#" data-i18n="preview.primary">Get your website</a>
+    </div>
+  </div>
+
+  <!-- Order Section -->
+  <section id="order">
+    <h2 data-i18n="order.title">Place Your Project Order</h2>
+    <p data-i18n="order.description">Have a project in mind? Share your ideas and let's build something amazing together!</p>
+    <a class="btn" href="https://forms.gle/SPKFLn1ZpY9WioHq9" target="_blank" data-i18n="order.cta">Submit Project Details</a>
+  </section>
+
+  <!-- Feedback Section -->
+  <section id="feedback">
+    <h2 data-i18n="feedback.title">Share Your Feedback</h2>
+    <p data-i18n="feedback.subtitle" style="margin-bottom: 30px; color: var(--text-light); font-size: 18px;">Help us improve your experience</p>
+    
+    <div class="feedback-form-container">
+      <form class="feedback-form" id="feedbackForm">
+        <div class="form-group">
+          <label for="feedbackName" data-i18n="feedback.name">Your Name</label>
+          <input type="text" id="feedbackName" placeholder="Enter your name" data-i18n-placeholder="feedback.name_placeholder" required>
+        </div>
+        <div class="form-group">
+          <label for="feedbackEmail" data-i18n="feedback.email">Your Email</label>
+          <input type="email" id="feedbackEmail" placeholder="Enter your email" data-i18n-placeholder="feedback.email_placeholder" required>
+        </div>
+        <div class="form-group">
+          <label for="feedbackMessage" data-i18n="feedback.message">Your Feedback</label>
+          <textarea id="feedbackMessage" placeholder="Share your thoughts..." data-i18n-placeholder="feedback.message_placeholder" required></textarea>
+        </div>
+        <button type="submit" id="feedbackSubmit" data-i18n="feedback.submit">Submit Feedback</button>
+      </form>
+
+      <div class="feedback-success" id="feedbackSuccess">
+        <h3 data-i18n="feedback.thank_you">Thank You! 🎉</h3>
+        <p data-i18n="feedback.thank_you_message">We appreciate your valuable feedback and will review it shortly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Professional Footer -->
+  <footer>
+    <div class="container">
+      <!-- Footer Content -->
+      <div class="footer-grid">
+        <!-- Brand Section -->
+        <div class="footer-section">
+          <h3>🌐 MyWebsite</h3>
+          <p>Building amazing web experiences with premium design and functionality.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="#home">→ Home</a>
+          <a href="#product">→ Products</a>
+          <a href="#order">→ Order</a>
+          <a href="#feedback">→ Feedback</a>
+        </div>
+
+        <!-- Support -->
+        <div class="footer-section">
+          <h4>Get in Touch</h4>
+          <a href="mailto:youremail@gmail.com">📧 Email</a>
+          <p>Contact us for inquiries & support</p>
+        </div>
+      </div>
+
+      <!-- Social Links - Professional -->
+      <div class="social-divider">
+        <h4 class="social-title">Follow Us</h4>
+        <div class="social-links">
+          <a href="https://youtube.com" target="_blank" rel="noopener" title="YouTube" class="social-icon">▶️</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram" class="social-icon">📸</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook" class="social-icon">📘</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" title="Twitter" class="social-icon">🐦</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn" class="social-icon">💼</a>
+          <a href="https://wa.me/yourwhatsappnumber" target="_blank" rel="noopener" title="WhatsApp" class="social-icon">💬</a>
+          <a href="https://t.me/yourtelegramhandle" target="_blank" rel="noopener" title="Telegram" class="social-icon">✈️</a>
+        </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div class="footer-bottom">
+        <p>© 2024 MyWebsite. All rights reserved.</p>
+        <p>MyWebsite from <a href="https://amarjeetlocato.github.io/Oneframe/" target="_blank" rel="noopener">Whoami</a> | Built with ❤️ for excellence</p>
+      </div>
+    </div>
+  </footer>
+
+  
+
+  <script>
+    // ---------------- i18n and Theme (auto-detect + preferences) ----------------
+    // Translations (add more keys/languages as needed)
+    const translations = {
+      en: {
+        logo: '🌐 MyWebsite',
+        'nav.home': 'Home',
+        'nav.product': 'Product',
+        'nav.order': 'Order',
+        'nav.contact': 'Contact',
+        'nav.feedback': 'Feedback',
+        'nav.credit': 'MyWebsite from',
+        'nav.credit_link': 'Whoami',
+        'hero.title': 'Welcome to MyWebsite',
+        'hero.subtitle': 'Discover innovative products and services tailored for your success',
+        'home.greeting': "Hello, I'm Aakash",
+        'home.description': 'Search for any profile by entering their email address. Find amazing projects, products, and connect with creative professionals.',
+        'form.placeholder': 'Enter email address...',
+        'form.search': 'Search Profile',
+        'form.searching': '⏳ Searching profile... Please wait',
+        'form.searching_short': 'Searching...',
+        'errors.not_found': '❌ Profile not found',
+        'success.loaded': '✅ Profile loaded! Redirecting...',
+        'errors.generic': '❌ Error occurred. Please try again.',
+        'product.title': 'My Products',
+        'order.title': 'Place Your Project Order',
+        'order.description': "Have a project in mind? Share your ideas and let's build something amazing together!",
+        'order.cta': 'Submit Project Details',
+        'contact.title': 'Get In Touch',
+        'contact.subtitle': 'Connect with me on your favorite platform',
+        'feedback.title': 'Share Your Feedback',
+        'feedback.subtitle': 'Help us improve your experience',
+        'feedback.name': 'Your Name',
+        'feedback.name_placeholder': 'Enter your name',
+        'feedback.email': 'Your Email',
+        'feedback.email_placeholder': 'Enter your email',
+        'feedback.message': 'Your Feedback',
+        'feedback.message_placeholder': 'Share your thoughts...',
+        'feedback.submit': 'Submit Feedback',
+        'feedback.thank_you': 'Thank You! 🎉',
+        'feedback.thank_you_message': 'We appreciate your valuable feedback and will review it shortly.',
+        'preview.openNewTab': 'Open in new tab',
+        'preview.device.mobile': 'Mobile',
+        'preview.device.desktop': 'Desktop',
+        'preview.primary': 'Get your website',
+        'preview.close': 'Close',
+        'product.card1.title': '🚀 Upcoming Product',
+        'product.card1.desc': 'Innovative platforms and startup ideas coming soon. Be the first to know about our latest innovations.',
+        'product.card1.link': 'Learn More',
+        'product.card1.action': 'Get your website',
+        'product.card2.title': '📱 Android App',
+        'product.card2.desc': 'Download and try my Android application. Experience cutting-edge mobile technology with seamless performance.',
+        'product.card2.link': 'Download APK',
+        'product.card2.action': 'Download APK',
+        'product.card3.title': '🌐 Website / WebApp',
+        'product.card3.desc': 'Live demo of a website/web application. Explore interactive features and modern web design patterns.',
+        'product.card3.link': 'View Website',
+        'product.card3.action': 'View site',
+        'product.preview': 'Preview'
+      },
+      hi: {
+        logo: '🌐 माइवेबसाइट',
+        'nav.home': 'होम',
+        'nav.product': 'प्रोडक्ट',
+        'nav.order': 'आर्डर',
+        'nav.contact': 'संपर्क',
+        'nav.feedback': 'प्रतिक्रिया',
+        'nav.credit': 'मेरी वेबसाइट',
+        'nav.credit_link': 'Whoami',
+        'hero.title': 'मेरी वेबसाइट में आपका स्वागत है',
+        'hero.subtitle': 'आपकी सफलता के लिए अनुकूल उत्पाद और सेवाएं खोजें',
+        'home.greeting': 'नमस्ते, मैं आकाश हूँ',
+        'home.description': 'किसी भी प्रोफ़ाइल को ईमेल दर्ज करके खोजें। अद्भुत परियोजनाएँ और पेशेवरों से जुड़ें।',
+        'form.placeholder': 'ईमेल पता दर्ज करें...',
+        'form.search': 'प्रोफ़ाइल खोजें',
+        'form.searching': '⏳ प्रोफ़ाइल खोजी जा रही है... कृपया प्रतीक्षा करें',
+        'form.searching_short': 'खोज रहे हैं...',
+        'errors.not_found': '❌ प्रोफ़ाइल नहीं मिली',
+        'success.loaded': '✅ प्रोफ़ाइल लोड हो गई! रीडायरेक्ट किया जा रहा है...',
+        'errors.generic': '❌ त्रुटि हुई। कृपया पुनः प्रयास करें।',
+        'product.title': 'मेरे प्रोडक्ट',
+        'order.title': 'अपना प्रोजेक्ट ऑर्डर करें',
+        'order.description': 'क्या आपके पास कोई प्रोजेक्ट है? अपने विचार साझा करें और चलिए कुछ अद्भुत बनाते हैं!',
+        'order.cta': 'प्रोजेक्ट विवरण भेजें',
+        'contact.title': 'संपर्क करें',
+        'contact.subtitle': 'मनपसंद प्लेटफ़ॉर्म पर मुझसे जुड़ें',
+        'feedback.title': 'अपनी प्रतिक्रिया साझा करें',
+        'feedback.subtitle': 'हमारे अनुभव में सुधार लाने में मदद करें',
+        'feedback.name': 'आपका नाम',
+        'feedback.name_placeholder': 'अपना नाम दर्ज करें',
+        'feedback.email': 'आपका ईमेल',
+        'feedback.email_placeholder': 'अपना ईमेल दर्ज करें',
+        'feedback.message': 'आपकी प्रतिक्रिया',
+        'feedback.message_placeholder': 'अपने विचार साझा करें...',
+        'feedback.submit': 'प्रतिक्रिया जमा करें',
+        'feedback.thank_you': 'धन्यवाद! 🎉',
+        'feedback.thank_you_message': 'हम आपकी मूल्यवान प्रतिक्रिया की सराहना करते हैं और इसकी जल्द समीक्षा करेंगे।',
+        'preview.openNewTab': 'नए टैब में खोलें',
+        'preview.device.mobile': 'मोबाइल',
+        'preview.device.desktop': 'डेस्कटॉप',
+        'preview.primary': 'अपनी वेबसाइट पाएं',
+        'preview.close': 'बंद करें',
+        'product.card1.title': '🚀 आगामी प्रोडक्ट',
+        'product.card1.desc': 'नवोन्मेषी प्लेटफ़ॉर्म और स्टार्टअप विचार जल्द आ रहे हैं। हमारे नवीनतम अपडेट पहले जानें।',
+        'product.card1.link': 'और जानें',
+        'product.card1.action': 'अपनी वेबसाइट पाएं',
+        'product.card2.title': '📱 एंड्रॉयड ऐप',
+        'product.card2.desc': 'हमारा एंड्रॉयड ऐप डाउनलोड करें और आज़माएँ। सहज प्रदर्शन के साथ अत्याधुनिक मोबाइल तकनीक का अनुभव लें।',
+        'product.card2.link': 'APK डाउनलोड करें',
+        'product.card2.action': 'APK डाउनलोड करें',
+        'product.card3.title': '🌐 वेबसाइट / वेबऐप',
+        'product.card3.desc': 'वेबसाइट/वेबऐप का लाइव डेमो। इंटरएक्टिव फीचर और आधुनिक डिज़ाइन देखें।',
+        'product.card3.link': 'वेबसाइट देखें',
+        'product.card3.action': 'साइट देखें',
+        'product.preview': 'पूर्वावलोकन'
+      }
+    };
+
+    function detectSystemLang(){ const navs = navigator.languages || [navigator.language]; return (navs[0] && navs[0].split('-')[0]) || 'en'; }
+    function t(key){ const lang = (localStorage.getItem('lang') || 'auto') === 'auto' ? detectSystemLang() : (localStorage.getItem('lang') || 'en'); return (translations[lang] && translations[lang][key]) || translations['en'][key] || key; }
+
+    function applyTranslations(){
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const txt = t(key);
+        // do not replace complex HTML, safe to use textContent
+        el.textContent = txt;
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+      });
+      // special UI updates
+      const closeBtn = document.getElementById('closePreview');
+      if (closeBtn) { closeBtn.setAttribute('title', t('preview.close')); closeBtn.setAttribute('aria-label', t('preview.close')); }
+      const deviceToggle = document.getElementById('deviceToggle');
+      if (deviceToggle){ const frame = document.querySelector('.frame'); const isMobile = frame && frame.classList.contains('device-mobile'); deviceToggle.textContent = isMobile ? t('preview.device.desktop') : t('preview.device.mobile'); }
+      const primary = document.getElementById('primaryAction'); if(primary) primary.textContent = t('preview.primary');
+    }
+
+    // init language selector
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect){
+      langSelect.value = localStorage.getItem('lang') || 'auto';
+      langSelect.addEventListener('change', (e) => { localStorage.setItem('lang', e.target.value); applyTranslations(); });
+    }
+
+    // Apply translations on load
+    applyTranslations();
+
+    // Theme: respect saved preference or system preference, and watch for changes
+    const themeToggle = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    function applyTheme(theme){
+      if (theme === 'dark') { document.body.classList.add('dark'); themeToggle.textContent = '☀️'; } else { document.body.classList.remove('dark'); themeToggle.textContent = '🌙'; }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) applyTheme(savedTheme);
+    else applyTheme(prefersDark.matches ? 'dark' : 'light');
+
+    themeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
+    });
+
+    // If user hasn't saved a preference, follow system changes
+    prefersDark.addEventListener('change', (e) => { if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light'); });
+
+    // ---------------- end i18n + theme ----------------
+
+
+    // ================= Template preview and order functions =================
+    function previewTemplate(templatePath) {
+      const modal = document.getElementById('previewModal');
+      const iframe = document.getElementById('previewIframe');
+      const spinner = document.getElementById('previewSpinner');
+      
+      // Reset modal
+      spinner.style.display = 'block';
+      iframe.style.display = 'none';
+      document.getElementById('previewImage').style.display = 'none';
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      // Load template in iframe
+      iframe.src = templatePath;
+      
+      // Show iframe after loading
+      iframe.onload = () => {
+        spinner.style.display = 'none';
+        iframe.style.display = 'block';
+      };
+      
+      // Setup open in new tab button
+      const openNewTabBtn = document.getElementById('openNewTab');
+      openNewTabBtn.onclick = () => {
+        window.open(templatePath, '_blank');
+      };
+      
+      // Setup primary action button
+      const primary = document.getElementById('primaryAction');
+      primary.textContent = t('preview.primary');
+      primary.href = '#order';
+      primary.onclick = (e) => {
+        e.preventDefault();
+        closePreview();
+        document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+
+    // ================= Preview iframe with image fallback =================
+    function previewIframe(iframeElement) {
+      const modal = document.getElementById('previewModal');
+      const modalIframe = document.getElementById('previewIframe');
+      const spinner = document.getElementById('previewSpinner');
+      const previewImage = document.getElementById('previewImage');
+      
+      // Reset modal
+      spinner.style.display = 'block';
+      modalIframe.style.display = 'none';
+      previewImage.style.display = 'none';
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      const iframeSrc = iframeElement.src;
+      
+      // Check if source is an image
+      if (iframeSrc && /\.(jpg|jpeg|png|gif|webp|svg)(\?|$)/i.test(iframeSrc)) {
+        previewImage.src = iframeSrc;
+        previewImage.style.display = 'block';
+        spinner.style.display = 'none';
+      } else {
+        // Load as iframe
+        modalIframe.src = iframeSrc;
+        modalIframe.onload = () => {
+          spinner.style.display = 'none';
+          modalIframe.style.display = 'block';
+        };
+      }
+      
+      // Setup open in new tab button
+      const openNewTabBtn = document.getElementById('openNewTab');
+      openNewTabBtn.onclick = () => {
+        if (iframeSrc) window.open(iframeSrc, '_blank');
+      };
+      
+      // Setup primary action button
+      const primary = document.getElementById('primaryAction');
+      primary.textContent = t('preview.primary');
+      primary.href = '#order';
+      primary.onclick = (e) => {
+        e.preventDefault();
+        closePreview();
+        document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+
+    function orderTemplate(templateName) {
+      // For now, redirect to order section
+      // In future, this could handle cart/checkout
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+      
+      // Optional: Add a success message
+      const msg = document.createElement('div');
+      msg.style.cssText = 'position:fixed;top:20px;right:20px;background:#4CAF50;color:#fff;padding:16px 24px;border-radius:8px;z-index:3000;animation:fadeInUp 0.5s ease-out;';
+      msg.textContent = `Template ${templateName.replace('template', 'Template ')} added to cart!`;
+      document.body.appendChild(msg);
+      
+      setTimeout(() => {
+        msg.style.animation = 'fadeOutDown 0.5s ease-in';
+        setTimeout(() => msg.remove(), 500);
+      }, 2000);
+    }
+
+    function closePreview() {
+      const modal = document.getElementById('previewModal');
+      const iframe = document.getElementById('previewIframe');
+      iframe.src = '';
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // ================= Product preview modal logic =================
+    (function(){
+      const modal = document.getElementById('previewModal');
+      const iframe = document.getElementById('previewIframe');
+      const spinner = document.getElementById('previewSpinner');
+      const closeBtn = document.getElementById('closePreview');
+      const openNewTabBtn = document.getElementById('openNewTab');
+      const deviceToggle = document.getElementById('deviceToggle');
+      let currentUrl = '';
+
+      function openPreview(_url, cardEl){
+        // cardEl is the product card element; prefer its image for preview
+        const url = _url || cardEl?.dataset?.preview || cardEl?.querySelector('img')?.src;
+        if(!cardEl) return;
+        currentUrl = cardEl.dataset.url || '';
+
+        // set primary action label and href
+        let actionLabel = '';
+        if (cardEl.dataset.actionKey) {
+          actionLabel = t(cardEl.dataset.actionKey);
+        } else if (cardEl.dataset.actionLabel) {
+          actionLabel = cardEl.dataset.actionLabel;
+        } else {
+          actionLabel = (currentUrl && currentUrl.toLowerCase().endsWith('.apk')) ? t('product.card2.action') || 'Download APK' : t('preview.primary');
+        }
+        const primary = document.getElementById('primaryAction');
+
+        // Prepare UI
+        spinner.style.display = 'block';
+        iframe.style.display = 'none';
+        document.getElementById('previewImage').style.display = 'none';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        // Set openNewTab action
+        openNewTabBtn.onclick = () => { if(currentUrl) window.open(currentUrl, '_blank'); };
+
+        // If currentUrl is an APK, show image and set primary button to download the apk
+        if (currentUrl && currentUrl.toLowerCase().endsWith('.apk')){
+          const img = cardEl.querySelector('img')?.src || '';
+          document.getElementById('previewImage').src = img;
+          document.getElementById('previewImage').style.display = 'block';
+          spinner.style.display = 'none';
+          primary.textContent = actionLabel;
+          primary.href = currentUrl;
+          primary.setAttribute('download', '');
+          primary.onclick = () => { closePreview(); };
+          return;
+        }
+
+        // If preview URL is an image file, show the image
+        if (url && /\.(jpg|jpeg|png|gif|webp|svg)(\?|$)/i.test(url)){
+          document.getElementById('previewImage').src = url;
+          document.getElementById('previewImage').style.display = 'block';
+          spinner.style.display = 'none';
+          primary.textContent = actionLabel || 'Get your website';
+          if (currentUrl) {
+            primary.href = currentUrl;
+            primary.removeAttribute('download');
+            primary.onclick = () => { window.open(currentUrl, '_blank'); };
+          } else {
+            primary.href = '#';
+            primary.onclick = () => {};
+          }
+          return;
+        }
+
+        // Otherwise, try to load the URL in iframe
+        iframe.src = url || currentUrl;
+        iframe.style.display = 'none';
+        primary.textContent = actionLabel || 'Open in new tab';
+        if (currentUrl) {
+          primary.href = currentUrl;
+          primary.onclick = () => { window.open(currentUrl, '_blank'); };
+        } else {
+          primary.href = '#';
+          primary.onclick = () => {};
+        }
+      }
+
+      function closePreview(){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        iframe.src = '';
+        iframe.style.display = 'none';
+        document.getElementById('previewImage').src = '';
+        document.getElementById('previewImage').style.display = 'none';
+        spinner.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      // Attach preview buttons
+      document.querySelectorAll('.btn-preview').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = btn.closest('.product-card');
+          openPreview(null, card);
+        });
+      });
+
+      // iframe load handling
+      iframe.addEventListener('load', () => {
+        spinner.style.display = 'none';
+        iframe.style.display = 'block';
+      });
+
+      // close handlers
+      closeBtn.addEventListener('click', closePreview);
+      modal.addEventListener('click', (e) => { if(e.target === modal) closePreview(); });
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closePreview(); });
+
+      // device toggle (Desktop <-> Mobile)
+      deviceToggle.addEventListener('click', () => {
+        const frame = modal.querySelector('.frame');
+        const isMobile = frame.classList.toggle('device-mobile');
+        frame.classList.toggle('device-desktop', !isMobile);
+        deviceToggle.textContent = isMobile ? t('preview.device.desktop') : t('preview.device.mobile');
+      });
+    })();
+
+    // ================= Feedback Form Logic =================
+    (function(){
+      const feedbackForm = document.getElementById('feedbackForm');
+      const feedbackSuccess = document.getElementById('feedbackSuccess');
+
+      if (feedbackForm) {
+        feedbackForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // Get form values
+          const name = document.getElementById('feedbackName').value.trim();
+          const email = document.getElementById('feedbackEmail').value.trim();
+          const message = document.getElementById('feedbackMessage').value.trim();
+
+          // Validate inputs
+          if (!name || !email || !message) {
+            alert(t('errors.generic'));
+            return;
+          }
+
+          // Disable submit button
+          const submitBtn = document.getElementById('feedbackSubmit');
+          submitBtn.disabled = true;
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = '⏳ Submitting...';
+
+          // Simulate form submission (replace with actual backend call if needed)
+          setTimeout(() => {
+            // Hide form
+            feedbackForm.style.display = 'none';
+            
+            // Show success message
+            feedbackSuccess.classList.add('show');
+
+            // Reset form after 3 seconds
+            setTimeout(() => {
+              feedbackForm.style.display = 'block';
+              feedbackSuccess.classList.remove('show');
+              feedbackForm.reset();
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }, 3000);
+
+            // Store feedback (you can send to a server here)
+            console.log('Feedback submitted:', { name, email, message });
+          }, 1000);
+        });
+      }
+    })();
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>

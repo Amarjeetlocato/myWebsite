@@ -1,0 +1,115 @@
+<script>
+
+const sheetURL = "https://script.google.com/macros/s/AKfycbwXafkf6E5czgrP0oL0WEmgmDaDuKuKtFz7RIM-5MmmJcrAFR8EPSmWg7vPAy1q7K3BQA/exec";
+
+function formatEmail(email) {
+  return email.toLowerCase().replace(/@/g, "_").replace(/\./g, "_");
+}
+
+function driveImage(url) {
+  if (!url) return "";
+  const id = url.match(/[-\w]{25,}/);
+  return id ? `https://drive.google.com/thumbnail?id=${id[0]}&sz=w2000` : url;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("searchForm");
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const email = document.getElementById("username").value.trim();
+    if (!email) return;
+
+    const username = formatEmail(email);
+    const apiURL = `${sheetURL}?user=${encodeURIComponent(username)}`;
+
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(data => {
+        console.log("FETCH DATA:", data);
+        if (!data || data.error) {
+          window.location.href = "index.html";
+          return;
+        }
+        loadProfile(data);
+        window.location.href = "profile.html";
+      })
+      .catch(err => console.error("FETCH ERROR:", err));
+  });
+});
+
+function loadProfile(item) {
+  // ===== NAV PROFILE =====
+  const navData = document.getElementById("nav-data");
+  if (navData) {
+    navData.innerHTML = `
+      <div class="profile-box">
+        <h1 style="color:#2563eb;">${item.shortName}</h1>
+        <img src="${driveImage(item.proimage)}" alt="Profile Picture" style="width:150px; border-radius:50%; margin-top:10px;">
+        <h3>${item.fullName}</h3>
+        <p>${item.saddress}</p>
+      </div>
+    `;
+  }
+
+  // ===== SLIDER =====
+  const slider = document.getElementById("slider");
+  if (slider && item.slider) {
+    const images = item.slider.split(",").map(s => s.trim());
+    let i = 0;
+    function changeSlide() {
+      slider.style.backgroundImage = `url('${driveImage(images[i])}')`;
+      i = (i + 1) % images.length;
+    }
+    changeSlide();
+    setInterval(changeSlide, 5000);
+  }
+
+  // ===== CARDS =====
+  const cards = [
+    {id:"youtube-card", url:item.yurl, img:item.yimage, title:item.title},
+    {id:"instagram-card", url:item.iurl, img:item.iimage, title:item.title},
+    {id:"facebook-card", url:item.furl, img:item.fimage, title:item.title},
+  ];
+
+  cards.forEach(c => {
+    const el = document.getElementById(c.id);
+    if (el) {
+      el.innerHTML = `
+        <a href="${c.url}" target="_blank">
+          <img src="${driveImage(c.img)}" style="width:100%; height:300px; object-fit:cover; border-radius:12px;">
+        </a>
+        <p>${c.title || ""}</p>
+      `;
+    }
+  });
+
+  // ===== THOUGHT =====
+  const thought = document.getElementById("thought-data");
+  if (thought) thought.innerText = item.thought || "";
+
+  // ===== MAP =====
+  const mapEl = document.getElementById("map-data");
+  if (mapEl && item.map) {
+    mapEl.innerHTML = `<iframe src="${item.map}" width="100%" height="320" style="border-radius:20px; border:none;"></iframe>`;
+  }
+
+  // ===== SOCIAL LINKS =====
+  const links = [
+    {id:"instagram-data", url:item.iurl},
+    {id:"facebook-data", url:item.furl},
+    {id:"youtube-data", url:item.yurl},
+    {id:"gmail-data", url:`mailto:${item.gmail}`},
+  ];
+
+  links.forEach(l => {
+    const el = document.getElementById(l.id);
+    if (el) el.href = l.url;
+  });
+}
+
+// ===== DARK MODE =====
+function toggleMode() {
+  document.body.classList.toggle("dark");
+}
