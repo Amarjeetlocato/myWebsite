@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saraswati Puja - Goddess of Knowledge</title>
+
+<!-- ================= CSS (SARASWATI PUJA THEME) ================= -->
+<style>
+/* ================= ROOT VARIABLES ================= */
+:root {
+  --bg: #fffef5;
+  --bg-secondary: #fef9e7;
+  --text: #2d1810;
+  --text-light: #6b4c3a;
+  --card: #ffffff;
+  --nav: #1a0f0a;
+  --primary: #d4a574;
+  --primary-light: #e6c9a8;
+  --secondary: #6b1f47;
+  --accent: #9d4edd;
+  --gold: #daa520;
+  --shadow: 0 10px 30px rgba(212, 165, 116, 0.15);
+  --shadow-lg: 0 20px 60px rgba(212, 165, 116, 0.25);
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark {
+  --bg: #1a0f0a;
+  --bg-secondary: #2d1810;
+  --text: #f5e6d3;
+  --text-light: #d4a574;
+  --card: #2d1810;
+  --nav: #0a0604;
+  --primary: #e6c9a8;
+  --primary-light: #f5e6d3;
+}
+
+/* ================= GLOBAL STYLES ================= */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body { 
+  background: var(--bg);
+  color: var(--text); 
+  transition: var(--transition);
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+nav { 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(26, 15, 10, 0.98) 100%);
+  color: #fff;
+  padding: 16px 40px; 
+  display: grid; 
+  grid-template-columns: auto 1fr auto;
+  align-items: center; 
+  gap: 40px;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 30px rgba(212, 165, 116, 0.2);
+  border-bottom: 2px solid var(--gold);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-self: end;
+}
+
+nav .logo { 
+  color: var(--gold); 
+  font-size: 18px; 
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: var(--transition);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+nav .logo:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  transform: scale(1.05);
+}
+
+.nav-center h1 { 
+  cursor: pointer; 
+  font-size: 20px;
+  transition: var(--transition);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.nav-center h1:hover {
+  background: rgba(212, 165, 116, 0.2);
+  color: var(--primary-light);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: var(--transition);
+  font-size: 15px;
+  padding: 8px 2px;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+  transition: width 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary-light);
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+.theme-toggle-nav {
+  cursor: pointer;
+  font-size: 20px;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 165, 116, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-nav:hover {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-color: transparent;
+  transform: rotate(20deg) scale(1.1);
+}
+
+/* ================= HERO BANNER ================= */
+.hero-banner {
+  margin-top: 65px;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 3px solid var(--gold);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.7) 0%, rgba(107, 31, 71, 0.6) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  font-weight: 300;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* ================= INFO BOX ================= */
+.container { 
+  position: relative; 
+}
+
+.info-box { 
+  position: absolute; 
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%) scale(0.95);
+  width: 280px; 
+  padding: 25px; 
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; 
+  pointer-events: none;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+
+.info-box img {
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 20px rgba(212, 165, 116, 0.2);
+  border: 2px solid var(--gold);
+}
+
+.info-box h3 {
+  font-size: 18px;
+  margin: 12px 0 8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.info-box p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.container:hover .info-box,
+.info-box.show { 
+  opacity: 1; 
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ================= QUOTE SECTION ================= */
+.quote-section {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(107, 31, 71, 0.08) 100%);
+}
+
+.quote-box {
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg-secondary) 100%);
+  padding: 50px 40px;
+  border-radius: 16px;
+  font-size: 22px;
+  font-weight: 600;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--gold);
+  color: var(--text);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.quote-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 60px rgba(212, 165, 116, 0.3);
+}
+
+.quote-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+/* ================= GALLERY SECTION ================= */
+.gallery-section {
+  padding: 80px 40px;
+  background: var(--bg);
+}
+
+.section-title {
+  font-size: 42px;
+  margin-bottom: 60px;
+  text-align: center;
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(212, 165, 116, 0.2);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-card {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.gallery-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+.gallery-card img {
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-card h3 {
+  margin: 20px;
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.gallery-card p {
+  margin: 0 20px 20px;
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ================= SIGNIFICANCE SECTION ================= */
+.significance-section {
+  padding: 80px 40px;
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.05) 0%, rgba(107, 31, 71, 0.05) 100%);
+}
+
+.significance-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sig-card {
+  background: var(--card);
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border: 2px solid transparent;
+  text-align: center;
+}
+
+.sig-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+.sig-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.sig-card h3 {
+  font-size: 20px;
+  margin: 15px 0 10px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.sig-card p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* ================= RITUALS SECTION ================= */
+.rituals-section {
+  padding: 80px 40px;
+  background: var(--bg);
+}
+
+.rituals-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ritual-step {
+  background: var(--card);
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border-left: 4px solid var(--gold);
+  position: relative;
+}
+
+.ritual-step:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+  position: absolute;
+  top: -20px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.ritual-step h3 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ritual-step p {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ================= FOOTER ================= */
+.footer { 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(26, 15, 10, 0.98) 100%);
+  color: #fff; 
+  padding: 70px 40px 30px;
+  text-align: center;
+  margin-top: 100px;
+  border-top: 3px solid var(--gold);
+  backdrop-filter: blur(10px);
+}
+
+.footer-social { 
+  display: flex;
+  justify-content: center;
+  gap: 25px; 
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.footer-social a { 
+  width: 55px; 
+  height: 55px; 
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all var(--transition);
+  box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+  text-decoration: none;
+  border: 2px solid var(--gold);
+}
+
+.footer-social a:hover {
+  transform: translateY(-8px) scale(1.12) rotate(10deg);
+  box-shadow: 0 15px 40px rgba(212, 165, 116, 0.4);
+}
+
+.footer-social img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-bottom {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-top: 30px;
+  color: #fff;
+}
+
+.footer-bottom p {
+  margin: 5px 0;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-card, .sig-card, .ritual-step {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--gold) 100%);
+  border-radius: 10px;
+  border: 3px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-light) 0%, var(--gold) 100%);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1024px) {
+  nav {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+  }
+
+  .nav-center {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 20px;
+    order: 3;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 15px;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  nav a {
+    font-size: 13px;
+    margin-left: 5px;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .gallery-section {
+    padding: 60px 20px;
+  }
+
+  .gallery-grid {
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .significance-section {
+    padding: 60px 20px;
+  }
+
+  .rituals-section {
+    padding: 60px 20px;
+  }
+
+  .footer {
+    padding: 50px 20px 20px;
+  }
+}
+</style>
+
+<!-- ✅ SINGLE JS FILE -->
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="test.html">🌸 सरस्वती पूजा</a>
+  </div>
+
+  <!-- Center: Profile Name -->
+  <div id="nav-data" class="nav-center container">
+    <h1 id="profileName">Goddess Saraswati</h1>
+    <div class="info-box" id="infoBox">
+      <img class="profileImg" src="l.jpeg" alt="Profile" style="width:100%; height:180px; object-fit:cover; border-radius:8px;">
+      <h3 id="profileFullName">Knowledge & Wisdom</h3>
+      <p id="profileAddress">Creator of Arts & Sciences</p>
+    </div>
+  </div>
+
+  <!-- Right: Controls -->
+  <div class="nav-right">
+    <select id="langSelect" aria-label="Language">
+      <option value="auto">Auto</option>
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+    <button id="themeToggle" class="theme-toggle-nav" onclick="toggleMode()">🌙</button>
+    <a href="#gallery">Gallery</a>
+    <a href="#significance">Significance</a>
+    <a href="#rituals">Rituals</a>
+  </div>
+</nav>
+
+<!-- ================= HERO BANNER ================= -->
+<div class="hero-banner" style="background-image: url('l.jpeg');">
+  <div class="hero-overlay">
+    <h1 class="hero-title">🌸 Saraswati Puja 🌸</h1>
+    <p class="hero-subtitle">Celebrating the Goddess of Knowledge, Music, and Wisdom</p>
+  </div>
+</div>
+
+<!-- ================= QUOTE SECTION ================= -->
+<div class="quote-section">
+  <div class="quote-box">
+    <span class="quote-icon">✨</span>
+    <p>"Saraswati is the embodiment of knowledge, music, and arts. She blesses all with wisdom and creativity."</p>
+  </div>
+</div>
+
+<!-- ================= GALLERY SECTION ================= -->
+<div id="gallery" class="gallery-section">
+  <h2 class="section-title">📿 Festival Gallery</h2>
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Saraswati Idol" style="object-fit:cover; height:250px;">
+      <h3>🎭 Saraswati Idol</h3>
+      <p>Beautiful depictions of the goddess in traditional attire</p>
+    </div>
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Puja Rituals" style="object-fit:cover; height:250px;">
+      <h3>🙏 Sacred Rituals</h3>
+      <p>Traditional worship ceremonies and blessings</p>
+    </div>
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Festival Celebrations" style="object-fit:cover; height:250px;">
+      <h3>🎊 Celebrations</h3>
+      <p>Community gatherings and festive moments</p>
+    </div>
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Books & Arts" style="object-fit:cover; height:250px;">
+      <h3>📚 Knowledge Arts</h3>
+      <p>Symbolism of books, music, and wisdom</p>
+    </div>
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Flower Offerings" style="object-fit:cover; height:250px;">
+      <h3>🌸 Flower Offerings</h3>
+      <p>Fragrant flowers and garlands offered in devotion</p>
+    </div>
+    <div class="gallery-card">
+      <img src="l.jpeg" alt="Divine Grace" style="object-fit:cover; height:250px;">
+      <h3>✨ Divine Grace</h3>
+      <p>Blessings and spiritual enlightenment through worship</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SIGNIFICANCE SECTION ================= -->
+<section id="significance" class="significance-section">
+  <h2 class="section-title">💫 Significance</h2>
+  <div class="significance-cards">
+    <div class="sig-card">
+      <div class="sig-icon">📖</div>
+      <h3>Knowledge</h3>
+      <p>Saraswati is worshipped as the goddess of knowledge, learning, and education. She inspires seekers of truth and wisdom.</p>
+    </div>
+    <div class="sig-card">
+      <div class="sig-icon">🎵</div>
+      <h3>Music & Arts</h3>
+      <p>She blesses artists, musicians, and performers with creativity and excellence in their respective fields.</p>
+    </div>
+    <div class="sig-card">
+      <div class="sig-icon">🌸</div>
+      <h3>Purity</h3>
+      <p>Depicted with white clothes and a swan, symbolizing purity, grace, and spiritual enlightenment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RITUALS SECTION ================= -->
+<section id="rituals" class="rituals-section">
+  <h2 class="section-title">🙏 Puja Rituals</h2>
+  <div class="rituals-timeline">
+    <div class="ritual-step">
+      <div class="step-number">1</div>
+      <h3>Preparation</h3>
+      <p>Temples and homes are decorated with flowers, lights, and rangoli designs</p>
+    </div>
+    <div class="ritual-step">
+      <div class="step-number">2</div>
+      <h3>Invocation</h3>
+      <p>Devotees invoke the goddess through prayers and hymns (Saraswati Vandana)</p>
+    </div>
+    <div class="ritual-step">
+      <div class="step-number">3</div>
+      <h3>Offerings</h3>
+      <p>Flowers, fruits, and sweets are offered to seek blessings of knowledge and wisdom</p>
+    </div>
+    <div class="ritual-step">
+      <div class="step-number">4</div>
+      <h3>Blessings</h3>
+      <p>Students place their books before the goddess for academic excellence and success</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-social">
+    <a href="#" target="_blank" title="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg">
+    </a>
+    <a href="#" target="_blank" title="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg">
+    </a>
+    <a href="#" target="_blank" title="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg">
+    </a>
+  </div>
+  <div class="footer-bottom">
+    <p>✨ Jai Saraswati Mata ✨</p>
+    <p>Celebrating Knowledge, Wisdom, and Creativity</p>
+  </div>
+</footer>
+
+<script>
+function toggleMode() { 
+  document.body.classList.toggle('dark'); 
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+
+function toggleInfo() { 
+  document.getElementById('infoBox').classList.toggle('show'); 
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+</script>
+
+</body>
+</html>

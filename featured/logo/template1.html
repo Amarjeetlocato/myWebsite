@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+
+<!-- ================= CSS (UPGRADED) ================= -->
+<style>
+/* ================= ROOT VARIABLES ================= */
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text: #1a1a1a;
+  --text-light: #666666;
+  --card: #ffffff;
+  --nav: #0a1628;
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --secondary: #f97316;
+  --accent: #ec4899;
+  --shadow: 0 10px 30px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark {
+  --bg: #0f172a;
+  --bg-secondary: #1e293b;
+  --text: #e5e7eb;
+  --text-light: #9ca3af;
+  --card: #1e293b;
+  --nav: #0c111d;
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+}
+
+/* ================= GLOBAL STYLES ================= */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body { 
+  background: var(--bg);
+  color: var(--text); 
+  transition: var(--transition);
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+nav { 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(15, 23, 42, 0.98) 100%);
+  color: #fff;
+  padding: 16px 40px; 
+  display: grid; 
+  grid-template-columns: auto 1fr auto;
+  align-items: center; 
+  gap: 40px;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-self: end;
+}
+
+nav .logo { 
+  color: var(--primary); 
+  font-size: 16px; 
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+nav .logo:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  transform: scale(1.02);
+}
+
+.nav-center h1 { 
+  cursor: pointer; 
+  font-size: 20px;
+  transition: var(--transition);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.nav-center h1:hover {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--primary-light);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: var(--transition);
+  font-size: 15px;
+  padding: 8px 2px;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary-light);
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+.theme-toggle-nav {
+  cursor: pointer;
+  font-size: 20px;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-nav:hover {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-color: transparent;
+  transform: rotate(20deg) scale(1.1);
+}
+
+/* ================= INFO BOX ================= */
+.container { 
+  position: relative; 
+}
+
+.info-box { 
+  position: absolute; 
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%) scale(0.95);
+  width: 280px; 
+  padding: 25px; 
+  background: var(--card);
+  border: 2px solid rgba(37, 99, 235, 0.3);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; 
+  pointer-events: none;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+
+.info-box img {
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.info-box h3 {
+  font-size: 18px;
+  margin: 12px 0 8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.info-box p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.container:hover .info-box,
+.info-box.show { 
+  opacity: 1; 
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ================= SLIDER ================= */
+.slider {
+  margin-top: 80px;
+  width: 100%;
+  height: 60vh;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  border: 2px solid rgba(37, 99, 235, 0.2);
+}
+
+/* ================= QUOTE SECTION ================= */
+.quote-section {
+  padding: 100px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(249, 115, 22, 0.08) 100%);
+}
+
+.quote-box {
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg-secondary) 100%);
+  padding: 50px 40px;
+  border-radius: 24px;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 600;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  border-left: 6px solid var(--primary);
+  color: var(--text);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.quote-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 60px rgba(37, 99, 235, 0.3);
+}
+
+/* ================= IDENTITY CARDS ================= */
+#identity {
+  padding: 80px 40px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(249, 115, 22, 0.03) 100%);
+}
+
+.identity { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 30px; 
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card { 
+  background: var(--card);
+  border-radius: 20px; 
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+  border-color: var(--primary);
+}
+
+.card a {
+  display: block;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.card:hover img {
+  transform: scale(1.1) rotate(2deg);
+}
+
+.card p { 
+  text-align: center; 
+  padding: 20px; 
+  font-weight: 700;
+  font-size: 16px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ================= ABOUT SECTION ================= */
+#contact {
+  padding: 100px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#contact h2 {
+  font-size: 40px;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.about-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-wrapper {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+/* ================= THOUGHT BOX ================= */
+.thought-box { 
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg-secondary) 100%);
+  padding: 45px; 
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  font-style: italic;
+  border: 2px solid rgba(236, 72, 153, 0.2);
+  border-left: 6px solid var(--accent);
+  position: relative;
+  transition: all var(--transition);
+  overflow: hidden;
+}
+
+.thought-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent, rgba(236, 72, 153, 0.1));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.thought-box:hover {
+  transform: translateX(5px);
+  box-shadow: 0 25px 60px rgba(236, 72, 153, 0.2);
+  border-color: rgba(236, 72, 153, 0.5);
+}
+
+.thought-box:hover::before {
+  opacity: 1;
+}
+
+.thought-box p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-light);
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= MAP ================= */
+#map-data {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  transition: all var(--transition);
+}
+
+#map-data a {
+  display: block;
+  text-decoration: none;
+}
+
+.map { 
+  width: 100%; 
+  height: 350px; 
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+#map-data:hover {
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+  border-color: var(--primary);
+}
+
+#map-data:hover .map {
+  transform: scale(1.08);
+}
+
+/* ================= FOOTER ================= */
+.footer { 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(15, 23, 42, 0.98) 100%);
+  color: #fff; 
+  padding: 70px 40px 30px;
+  text-align: center;
+  margin-top: 100px;
+  border-top: 2px solid rgba(37, 99, 235, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+.footer-social { 
+  display: flex;
+  justify-content: center;
+  gap: 25px; 
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.footer-social a { 
+  width: 55px; 
+  height: 55px; 
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all var(--transition);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+.footer-social a:hover {
+  transform: translateY(-8px) scale(1.12) rotate(10deg);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+}
+
+.footer-social img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-bottom {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.card, .thought-box, .quote-box {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 10px;
+  border: 3px solid var(--bg-secondary);
+}
+
+/* ================= IFRAME STYLING & ANIMATIONS ================= */
+iframe {
+  border-radius: 16px;
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s;
+  animation: iframeFloat 3s ease-in-out infinite;
+  display: block;
+  opacity: 1;
+}
+
+iframe:hover {
+  border-color: var(--primary);
+  box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
+  animation: none;
+  transform: translateY(-8px);
+}
+
+@keyframes iframeFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* ================= IFRAME IN CARDS ================= */
+.card iframe {
+  width: 100%;
+  height: 300px;
+  margin: 0;
+}
+
+/* Small corner button so iframe remains interactive but a link is still accessible */
+.card .card-overlay {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 30;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(2,6,23,0.2);
+  transition: transform 0.12s, background 0.12s;
+}
+
+.card .card-overlay:hover {
+  transform: scale(1.05);
+  background: rgba(0,0,0,0.75);
+}
+
+.card .card-overlay-icon {
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-light) 0%, var(--secondary) 100%);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1024px) {
+  nav {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+  }
+
+  .nav-center {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 20px;
+    order: 3;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 15px;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  nav a {
+    font-size: 13px;
+    margin-left: 5px;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .slider {
+    margin-top: 120px;
+    height: 45vh;
+  }
+
+  .quote-box {
+    font-size: 18px;
+    padding: 30px 20px;
+  }
+
+  .identity {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 15px;
+  }
+
+  #contact {
+    padding: 60px 15px;
+  }
+
+  #contact h2 {
+    font-size: 28px;
+  }
+
+  .thought-box {
+    padding: 25px;
+  }
+
+  .footer {
+    padding: 50px 20px 20px;
+  }
+}
+
+/* ================= NAVBAR ================= */
+nav { 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(15, 23, 42, 0.95) 100%);
+  color: #fff;
+  padding: 16px 40px; 
+  display: grid; 
+  grid-template-columns: auto 1fr auto;
+  align-items: center; 
+  gap: 40px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-self: end;
+}
+
+nav .logo { 
+  color: var(--primary); 
+  font-size: 24px; 
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+nav .logo:hover {
+  color: var(--secondary);
+  transform: scale(1.05);
+}
+
+.nav-center h1 { 
+  cursor: pointer; 
+  font-size: 24px;
+  transition: 0.3s;
+  color: var(--primary);
+}
+
+.nav-center h1:hover {
+  color: var(--secondary);
+  transform: scale(1.05);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.nav-credit {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-credit a {
+  color: var(--primary);
+  font-weight: 700;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.nav-credit a:hover {
+  color: var(--secondary);
+}
+
+.theme-toggle-nav {
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s;
+  background: none;
+  border: none;
+  padding: 5px;
+  color: #fff;
+}
+
+.theme-toggle-nav:hover {
+  transform: rotate(20deg) scale(1.15);
+}
+
+.nav-center h1 { 
+  cursor: pointer; 
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.nav-center h1:hover {
+  color: var(--primary);
+  transform: scale(1.05);
+}
+
+/* ================= INFO BOX ================= */
+.container { 
+  position: relative; 
+}
+
+.info-box { 
+  position: absolute; 
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%) scale(0.95);
+  width: 280px; 
+  padding: 20px; 
+  background: var(--card);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; 
+  pointer-events: none;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.info-box h3 {
+  font-size: 18px;
+  margin: 12px 0 8px;
+  color: var(--primary);
+}
+
+.info-box p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.container:hover .info-box,
+.info-box.show { 
+  opacity: 1; 
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ================= SLIDER ================= */
+.slider {
+  margin-top: 80px;
+  width: 100%;
+  height: calc(100vh - 200px);
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-secondary);
+}
+
+.slider-track {
+  display: flex;
+  width: 600%;
+  height: 100%;
+  animation: slideHorizontal 24s linear infinite;
+}
+
+.slider-item {
+  width: calc(100% / 6);
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.slider-item iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slider-item iframe:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 50px rgba(37, 99, 235, 0.3);
+}
+
+@keyframes slideHorizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ================= QUOTE SECTION ================= */
+.quote-section {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+}
+
+.quote-box {
+  background: var(--card);
+  padding: 40px 30px;
+  border-radius: 24px;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 600;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--primary);
+  color: var(--primary);
+  backdrop-filter: blur(10px);
+}
+
+/* ================= IDENTITY CARDS ================= */
+.identity { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 30px; 
+  padding: 60px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card { 
+  background: var(--card);
+  border-radius: 20px; 
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.card a {
+  display: block;
+  height: 300px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.card:hover img {
+  transform: scale(1.08);
+}
+
+.card p { 
+  text-align: center; 
+  padding: 18px; 
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--primary);
+}
+
+/* ================= ABOUT SECTION ================= */
+#contact {
+  padding: 80px 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#contact h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-wrapper {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+/* ================= THOUGHT BOX ================= */
+.thought-box { 
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg-secondary) 100%);
+  padding: 40px; 
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  font-style: italic;
+  border-left: 5px solid var(--accent);
+  position: relative;
+  transition: all 0.4s;
+}
+
+.thought-box:hover {
+  transform: translateX(5px);
+}
+
+.thought-box p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+/* ================= MAP ================= */
+#map-data {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+#map-data a {
+  display: block;
+  text-decoration: none;
+}
+
+.map { 
+  width: 100%; 
+  height: 320px; 
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+#map-data:hover .map {
+  transform: scale(1.05);
+}
+
+/* ================= FOOTER ================= */
+.footer { 
+  background: linear-gradient(135deg, var(--nav) 0%, rgba(15, 23, 42, 0.95) 100%);
+  color: #fff; 
+  padding: 60px 30px 30px;
+  text-align: center;
+  margin-top: 80px;
+  border-top: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.footer-social { 
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.footer-social a { 
+  width: 50px; 
+  height: 50px; 
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+  text-decoration: none;
+}
+
+.footer-social a:hover {
+  transform: translateY(-5px) scale(1.1);
+  background: var(--secondary);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+}
+
+.footer-social img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-bottom {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 20px;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1024px) {
+  nav {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+  }
+
+  .nav-center {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 20px;
+    order: 3;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 15px;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  nav a {
+    margin-left: 15px;
+  }
+
+  .nav-right {
+    justify-self: start;
+  }
+
+  .slider {
+    margin-top: 120px;
+    height: 45vh;
+  }
+
+  .quote-box {
+    font-size: 18px;
+    padding: 30px 20px;
+  }
+
+  .identity {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 15px;
+  }
+
+  #contact {
+    padding: 60px 15px;
+  }
+
+  #contact h2 {
+    font-size: 28px;
+  }
+
+  .thought-box {
+    padding: 25px;
+  }
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card, .thought-box, .quote-box {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+</style>
+
+<!-- ✅ SINGLE JS FILE -->
+
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="https://amarjeetlocato.github.io/Oneframe/" target="_blank"><span data-i18n="nav.credit">MyWebsite from</span> <span data-i18n="nav.credit_link">Whoami</span></a>
+  </div>
+
+  <!-- Center: Profile Name (JS fills this) -->
+  <div id="nav-data" class="nav-center container">
+    <h1 id="profileName"></h1>
+    <div class="info-box" id="infoBox">
+      <iframe  src="#" alt="Profile" style="width:200px; height:250px; border-radius:10px;"></iframe>
+      <h3 id="profileFullName"></h3>
+      <p id="profileAddress"></p>
+    </div>
+  </div>
+  
+
+  <!-- Right: Navigation Links & Theme -->
+  <div class="nav-right">
+    <select id="langSelect" aria-label="Language" title="Language">
+      <option value="auto">Auto</option>
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+    <button id="themeToggle" class="theme-toggle-nav" onclick="toggleMode()">🌙</button>
+    <a href="#home" data-i18n="nav.home">Home</a>
+    <a href="#identity" data-i18n="nav.product">Profile</a>
+    <a href="#contact" data-i18n="nav.contact">About Me</a>
+    <a href="#contact" data-i18n="nav.contact">Contact Us</a>
+  </div>
+</nav>
+
+<!-- ================= SLIDER ================= -->
+<div id="slider" class="slider">
+  <div class="slider-track">
+    <!-- <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="slider-item">
+      <iframe src="#" frameborder="0" allowfullscreen></iframe>
+    </div> -->
+  </div>
+</div>
+
+<!-- ================= QUOTE ================= -->
+<div class="quote-section">
+  <div class="quote-box">“Welcome to MY profile”</div>
+</div>
+
+<!-- ================= IDENTITY ================= -->
+<div id="identity" class="identity">
+
+  <div class="card" id="youtube-card">
+    <a href="#" target="_blank">
+      <iframe src="#" width="300" height="300" style="border-radius:16px; border:2px solid rgba(37, 99, 235, 0.2);"></iframe>
+    </a>
+    <p>YouTube</p>
+  </div>
+
+  <div class="card" id="instagram-card">
+    <a href="#" target="_blank">
+      <iframe src="#" width="300" height="300" style="border-radius:16px; border:2px solid rgba(37, 99, 235, 0.2);"></iframe>
+    </a>
+    <p>Instagram</p>
+  </div>
+
+  <div class="card" id="facebook-card">
+    <a href="#" target="_blank">
+      <iframe src="#" width="300" height="300" style="border-radius:16px; border:2px solid rgba(37, 99, 235, 0.2);"></iframe>
+    </a>
+    <p>Facebook</p>
+  </div>
+
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section id="contact">
+  <h2>About Me</h2><br>
+
+  <div class="about-wrapper">
+    <div class="thought-box">
+      <p id="thought-data"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-social">
+    <a id="instagram-data" href="#" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg">
+    </a>
+    <a id="facebook-data" href="#" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg">
+    </a>
+    <a id="youtube-data" href="#" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg">
+    </a>
+    <a id="gmail-data" href="#">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg">
+    </a>
+  </div>
+</footer>
+
+<script>
+function toggleMode(){ document.body.classList.toggle('dark'); }
+function toggleInfo(){ document.getElementById('infoBox').classList.toggle('show'); }
+</script>
+
+</body>
+</html>
